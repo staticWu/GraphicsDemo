@@ -18,14 +18,13 @@ public:
 public slots:
 	void onDrawLine();
 	void onDrawCircle();
+	void onDrawPoint();
 
 protected:
 	void paintEvent(QPaintEvent *e) override;
 	bool eventFilter(QObject *obj, QEvent *e) override;
 
 private slots:
-	void onOperateFinished();
-	void onOperateCanceled();
 
 private:
 	Ui::MainWindow ui;

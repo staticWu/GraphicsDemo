@@ -41,7 +41,7 @@ xGraphicView::~xGraphicView()
 
 void xGraphicView::setAction(xActionPreviewInterface *action)
 {
-	if (m_action)
+	if (m_action) // 将上一次的没画完的预览层关掉
 	{
 		delete m_action;
 	}

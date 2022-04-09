@@ -5,11 +5,9 @@
 #include <QPainter>
 #include <QStyleOption>
 
-#include "FunctionsTabWidget.h"
-#include "OperationWidget.h"
-
-#include "action/xActionDrawLine.h"
-#include "action/xActionDrawCircle.h"
+#include "xActionDrawLine.h"
+#include "xActionDrawCircle.h"
+#include "xActionDrawPoint.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -26,21 +24,10 @@ MainWindow::MainWindow(QWidget *parent)
 	hLayout1->setSpacing(0);
 	hLayout1->addWidget(m_view);
 
-	auto tabWidget = new FunctionsTabWidget(ui.func_tab_widget);
-	auto hLayout2 = new QHBoxLayout(ui.func_tab_widget);
-	hLayout2->setContentsMargins(0, 0, 0, 0);
-	hLayout2->setSpacing(0);
-	hLayout2->addWidget(tabWidget);
-
-	m_vLayout = new QVBoxLayout(ui.r_pop_widget);
-	m_vLayout->setContentsMargins(0, 0, 0, 0);
-	m_vLayout->setSpacing(0);
-	ui.r_pop_widget->hide();
-
-	connect(tabWidget, &FunctionsTabWidget::drawLineEmit, this, &MainWindow::onDrawLine);
-	connect(tabWidget, &FunctionsTabWidget::drawCircleEmit, this, &MainWindow::onDrawCircle);
-
 	connect(ui.action_quit, &QAction::triggered, this, &QWidget::close);
+	connect(ui.lineBtn, &QPushButton::clicked, this, &MainWindow::onDrawLine);
+	connect(ui.circleBtn, &QPushButton::clicked, this, &MainWindow::onDrawCircle);
+	connect(ui.pointBtn, &QPushButton::clicked, this, &MainWindow::onDrawPoint);
 }
 
 MainWindow::~MainWindow()
@@ -49,44 +36,20 @@ MainWindow::~MainWindow()
 
 void MainWindow::onDrawLine()
 {
-	// 切换操作窗口
-	auto opw = new OperationWidget(ui.r_pop_widget);
-	m_vLayout->addWidget(opw);
-	ui.r_main_widget->hide();
-	ui.r_pop_widget->show();
-
 	xActionDrawLine *lineAction = new xActionDrawLine(m_view);
 	m_view->setAction(lineAction);
-
-	// 连接确定、取消、下一步信号槽
-	connect(opw, &OperationWidget::confirmEmit, this, &MainWindow::onOperateFinished);
-	connect(opw, &OperationWidget::cancelEmit, this, &MainWindow::onOperateCanceled);
-	connect(opw, &OperationWidget::nextEmit, this, [=] {
-		m_view->finishAction();
-		xActionDrawLine *lineAction = new xActionDrawLine(m_view);
-		m_view->setAction(lineAction);
-		});
 }
 
 void MainWindow::onDrawCircle()
 {
-	// 切换操作窗口
-	auto opw = new OperationWidget(ui.r_pop_widget);
-	m_vLayout->addWidget(opw);
-	ui.r_main_widget->hide();
-	ui.r_pop_widget->show();
-
 	xActionDrawCircle *circleAction = new xActionDrawCircle(m_view);
 	m_view->setAction(circleAction);
+}
 
-	// 连接确定、取消、下一步信号槽
-	connect(opw, &OperationWidget::confirmEmit, this, &MainWindow::onOperateFinished);
-	connect(opw, &OperationWidget::cancelEmit, this, &MainWindow::onOperateCanceled);
-	connect(opw, &OperationWidget::nextEmit, this, [=] {
-		m_view->finishAction();
-		xActionDrawCircle *circleAction = new xActionDrawCircle(m_view);
-		m_view->setAction(circleAction);
-		});
+void MainWindow::onDrawPoint()
+{
+	xActionDrawPoint* pointAction = new xActionDrawPoint(m_view);
+	m_view->setAction(pointAction);
 }
 
 void MainWindow::paintEvent(QPaintEvent *e)
@@ -113,18 +76,4 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *e)
 	{
 		return QMainWindow::eventFilter(obj, e);
 	}
-}
-
-void MainWindow::onOperateFinished()
-{
-	m_view->finishAction();
-	ui.r_pop_widget->hide();
-	ui.r_main_widget->show();
-}
-
-void MainWindow::onOperateCanceled()
-{
-	m_view->cancelAction();
-	ui.r_pop_widget->hide();
-	ui.r_main_widget->show();
 }

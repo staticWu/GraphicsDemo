@@ -53,9 +53,6 @@
     <ClCompile Include="src\engine\entity\xLine.cpp">
       <Filter>engine\entity</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\FunctionsTabWidget.cpp">
-      <Filter>ui</Filter>
-    </ClCompile>
     <ClCompile Include="src\action\xActionDefault.cpp">
       <Filter>action</Filter>
     </ClCompile>
@@ -77,9 +74,6 @@
     <ClCompile Include="src\action\xActionPreviewInterface.cpp">
       <Filter>action</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\OperationWidget.cpp">
-      <Filter>ui</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\entity\xRegLine.cpp">
       <Filter>engine\entity</Filter>
     </ClCompile>
@@ -92,10 +86,19 @@
     <ClCompile Include="src\engine\entity\xInterCoupleEntity.cpp">
       <Filter>engine\entity</Filter>
     </ClCompile>
+    <ClCompile Include="src\action\xActionDrawPoint.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
     <ClCompile Include="src\engine\entity\xInterLineAndLine.cpp">
       <Filter>engine\entity</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\entity\xPoint.cpp">
+      <Filter>engine\entity</Filter>
+    </ClCompile>
     <ClCompile Include="src\engine\entity\xInterSingleEntity.cpp">
+      <Filter>engine\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\entity\xRegPoint.cpp">
       <Filter>engine\entity</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\entity\xInterCircle.cpp">
@@ -115,14 +118,8 @@
     <QtMoc Include="src\engine\xTypeDef.h">
       <Filter>engine</Filter>
     </QtMoc>
-    <QtMoc Include="src\ui\FunctionsTabWidget.h">
-      <Filter>ui</Filter>
-    </QtMoc>
     <QtMoc Include="src\engine\xStyle.h">
       <Filter>engine</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\OperationWidget.h">
-      <Filter>ui</Filter>
     </QtMoc>
     <QtMoc Include="src\engine\entity\xEntity.h">
       <Filter>engine\entity</Filter>
@@ -154,15 +151,15 @@
     <QtMoc Include="src\engine\entity\xInterCircle.h">
       <Filter>engine\entity</Filter>
     </QtMoc>
+    <QtMoc Include="src\engine\entity\xRegPoint.h">
+      <Filter>engine\entity</Filter>
+    </QtMoc>
+    <QtMoc Include="src\engine\entity\xPoint.h">
+      <Filter>engine\entity</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\ui\MainWindow.ui">
-      <Filter>ui</Filter>
-    </QtUic>
-    <QtUic Include="src\ui\FunctionsTabWidget.ui">
-      <Filter>ui</Filter>
-    </QtUic>
-    <QtUic Include="src\ui\OperationWidget.ui">
       <Filter>ui</Filter>
     </QtUic>
   </ItemGroup>
@@ -180,6 +177,9 @@
       <Filter>action</Filter>
     </ClInclude>
     <ClInclude Include="src\action\xActionPreviewInterface.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\action\xActionDrawPoint.h">
       <Filter>action</Filter>
     </ClInclude>
   </ItemGroup>

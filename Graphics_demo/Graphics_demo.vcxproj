@@ -114,6 +114,7 @@
     <ClCompile Include="src\action\xActionDefault.cpp" />
     <ClCompile Include="src\action\xActionDrawCircle.cpp" />
     <ClCompile Include="src\action\xActionDrawLine.cpp" />
+    <ClCompile Include="src\action\xActionDrawPoint.cpp" />
     <ClCompile Include="src\action\xActionInterface.cpp" />
     <ClCompile Include="src\action\xActionPreviewInterface.cpp" />
     <ClCompile Include="src\engine\entity\xCircle.cpp" />
@@ -123,21 +124,19 @@
     <ClCompile Include="src\engine\entity\xInterLineAndLine.cpp" />
     <ClCompile Include="src\engine\entity\xInterSingleEntity.cpp" />
     <ClCompile Include="src\engine\entity\xLine.cpp" />
+    <ClCompile Include="src\engine\entity\xPoint.cpp" />
     <ClCompile Include="src\engine\entity\xRegCircle.cpp" />
     <ClCompile Include="src\engine\entity\xRegionEntity.cpp" />
     <ClCompile Include="src\engine\entity\xRegLine.cpp" />
+    <ClCompile Include="src\engine\entity\xRegPoint.cpp" />
     <ClCompile Include="src\engine\xGraphicView.cpp" />
     <ClCompile Include="src\engine\xStyle.cpp" />
     <ClCompile Include="src\engine\xTypeDef.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\ui\FunctionsTabWidget.cpp" />
     <ClCompile Include="src\ui\MainWindow.cpp" />
-    <ClCompile Include="src\ui\OperationWidget.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="src\ui\FunctionsTabWidget.ui" />
     <QtUic Include="src\ui\MainWindow.ui" />
-    <QtUic Include="src\ui\OperationWidget.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\ui\MainWindow.h" />
@@ -149,15 +148,17 @@
     <QtMoc Include="src\engine\xGraphicView.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\action\xActionDrawPoint.h" />
     <ClInclude Include="src\action\xActionInterface.h" />
     <QtMoc Include="src\engine\entity\xInterCircle.h" />
     <QtMoc Include="src\engine\entity\xInterSingleEntity.h" />
     <QtMoc Include="src\engine\entity\xInterCoupleEntity.h" />
     <QtMoc Include="src\engine\entity\xInterLineAndLine.h" />
+    <QtMoc Include="src\engine\entity\xPoint.h" />
     <QtMoc Include="src\engine\entity\xRegCircle.h" />
     <QtMoc Include="src\engine\entity\xRegionEntity.h" />
     <QtMoc Include="src\engine\entity\xRegLine.h" />
-    <QtMoc Include="src\ui\OperationWidget.h" />
+    <QtMoc Include="src\engine\entity\xRegPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\engine\xTypeDef.h" />
@@ -174,9 +175,6 @@
   <ItemGroup>
     <QtMoc Include="src\engine\entity\xEntity.h" />
     <QtMoc Include="src\engine\entity\xLine.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="src\ui\FunctionsTabWidget.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\action\xActionDefault.h" />
