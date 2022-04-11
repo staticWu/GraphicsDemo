@@ -19,8 +19,9 @@ void xActionDefault::mousePressEvent(QMouseEvent *e)
 	{
 		auto gi = m_view->itemAt(e->pos());
 		if (gi == nullptr || gi->type() <= xEntity::ET_Unknown)
+		{		
 			return;
-
+		}
 		auto item = static_cast<xEntity *>(gi);
 
 		if (item->flags() & QGraphicsItem::ItemIsSelectable)

@@ -62,7 +62,6 @@ void xRegPoint::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
 
 		xStyle::makeStyle(style, &m_pen, &m_brush, f);
 	}
-
 	// 填充范围
 	painter->fillPath(path, m_brush);
 	// 画中心点 叉
@@ -76,7 +75,7 @@ void xRegPoint::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
 	QPointF endP2 = { m_regPoint.center().x() - w ,m_regPoint.center().y() + w };
 	painter->drawLine(startP1, startP2);
 	painter->drawLine(endP1, endP2);
-	minWidth = w + 1/ f;
+	minWidth = w + 1 / f;
 
 	// 选中时绘画控制点
 	if ((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable))
@@ -121,24 +120,22 @@ void xRegPoint::setSubPoint(const QPointF& p)
 
 void xRegPoint::setPoint(const QPointF& p, qreal width)
 {
-	auto sp = mapFromScene(p);
-	if (m_regPoint.center() == sp  && qFuzzyCompare(width, m_width))
+	if (m_regPoint.center() == p  && qFuzzyCompare(width, m_width))
 		return;
 
 	prepareGeometryChange();
-	m_regPoint.setCenter(sp);
+	m_regPoint.setCenter(p);
 	m_width = width;
 	update();
 }
 
 void xRegPoint::setPt(const QPointF& p)
 {
-	auto sp = mapFromScene(p);
-	if (m_regPoint.center() == sp )
+	if (m_regPoint.center() == p )
 		return;
 
 	prepareGeometryChange();
-	m_regPoint.setCenter(sp);
+	m_regPoint.setCenter(p);
 	update();
 }
 
@@ -185,9 +182,8 @@ bool xRegPoint::isCtrlPoint(const QPointF& p) const
 
 void xRegPoint::changeEdgeByPoint(const QPointF& p)
 {
-	auto sp = mapFromScene(p);
 	// 判断最小半径不能小于画的叉大小
-	const qreal dw = Distance(sp, m_regPoint.center()) - m_regPoint.radius();
+	const qreal dw = Distance(p, m_regPoint.center()) - m_regPoint.radius();
 	if (minWidth > dw)
 		return;
 	setRegWidth(dw);
@@ -198,9 +194,9 @@ bool xRegPoint::isRegionEdge(const QPointF& p) const
 	if (!(flags() & ItemIsMovable))
 		return false;
 
-	auto sp = mapFromScene(p);
-	const qreal dw = Distance(sp, m_regPoint.center()) - m_regPoint.radius();
+	const qreal dw = Distance(p, m_regPoint.center()) - m_regPoint.radius();
 	if (fabs(dw - m_width) < DELTA_DIST_2 / viewScaleFactor())
 		return true;
 	return false;
 }
+

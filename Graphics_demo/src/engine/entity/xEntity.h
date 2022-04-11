@@ -71,7 +71,6 @@ public:
 	void setPen(const QPen &pen);
 	xStyle::Style style() const { return m_style; }
 	void setStyle(xStyle::Style style);
-
 signals:
 	// 位置改变信号，由moveBy函数发送
 	void posChanged(const QPointF &delta);
