@@ -203,3 +203,11 @@ bool xCircle::isCtrlPoint(const QPointF &p) const
 		|| Distance(pt2(), p) < DELTA_DIST_2 / viewScaleFactor()
 		|| Distance(pt3(), p) < DELTA_DIST_2 / viewScaleFactor());
 }
+
+bool xCircle::isFittingEntity(const QPointF& p)
+{
+	const qreal dw = fabs(Distance(p, m_circle.center()) - m_circle.radius());
+	if (fabs(dw) < DELTA_DIST_2 / viewScaleFactor())
+		return true;
+	return false;
+}

@@ -267,3 +267,5 @@ bool xRegCircle::isRegionEdge(const QPointF &p) const
 		return true;
 	return false;
 }
+
+

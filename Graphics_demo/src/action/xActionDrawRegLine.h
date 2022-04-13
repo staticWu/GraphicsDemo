@@ -3,14 +3,13 @@
 #include "xActionPreviewInterface.h"
 #include <QPoint>
 
-class xRegCircle;
-class xLine;
+class xRegLine;
 
-class xActionDrawCircle : public xActionPreviewInterface
+class xActionDrawRegLine : public xActionPreviewInterface
 {
 public:
-	xActionDrawCircle(xGraphicView *view);
-	~xActionDrawCircle();
+	xActionDrawRegLine(xGraphicView *view);
+	~xActionDrawRegLine();
 
 	void mousePressEvent(QMouseEvent *e) override;
 	void mouseMoveEvent(QMouseEvent *e) override;
@@ -19,7 +18,6 @@ public:
 	void cancel() override;
 
 private:
-	QPointF mp1, mp2;
-	xRegCircle *m_circle = nullptr;
-	xLine *m_line = nullptr;
+	QPointF mp;
+	xRegLine *m_line = nullptr;
 };

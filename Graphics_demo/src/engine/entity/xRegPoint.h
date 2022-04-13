@@ -46,6 +46,7 @@ public:
 	bool isCtrlPoint(const QPointF& p) const override;
 	void changeEdgeByPoint(const QPointF& p) override;
 	bool isRegionEdge(const QPointF& p) const override;
+
 protected:
 	// 范围点的数据
 	xCircleData m_regPoint;

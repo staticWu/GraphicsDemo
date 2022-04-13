@@ -22,6 +22,7 @@ public:
 		ET_Circle,
 		ET_Arc,
 		ET_Point,
+		ET_StraightLine,
 		ET_Entity_End,
 		// 带范围的图元
 		ET_Region_Start,
@@ -29,6 +30,7 @@ public:
 		ET_RegCircle,
 		ET_RegArc,
 		ET_RegPoint,
+		ET_RegStraightLine,
 		ET_Region_End,
 		// 绑定单个图元
 		ET_InterSingle_Start,
@@ -66,6 +68,8 @@ public:
 	virtual void moveCtrlPoint(const QPointF &pt, const QPointF &movedPt) = 0;
 	// 判断是否是控制点
 	virtual bool isCtrlPoint(const QPointF &p) const = 0;
+	// 判断是否是拟合的实体
+	virtual bool isFittingEntity(const QPointF& p) { return false; };
 
 	QPen pen() const { return m_pen; }
 	void setPen(const QPen &pen);

@@ -46,6 +46,7 @@ public:
 	QList<QPointF> controlPoints() const override;
 	void moveCtrlPoint(const QPointF &pt, const QPointF &movedPt) override;
 	bool isCtrlPoint(const QPointF &p) const override;
+	bool isFittingEntity(const QPointF& p) override;
 
 protected:
 	xCircleData m_circle;

@@ -1,22 +1,22 @@
-#include "xActionDrawLine.h"
+#include "xActionDrawRegLine.h"
 #include <QGraphicsScene>
 #include <QMouseEvent>
 #include <QDebug>
 #include "engine/xGraphicView.h"
 #include "entity/xRegLine.h"
 
-xActionDrawLine::xActionDrawLine(xGraphicView *view)
+xActionDrawRegLine::xActionDrawRegLine(xGraphicView *view)
 	: xActionPreviewInterface(view, xDef::AT_DrawLine)
 {
 }
 
-xActionDrawLine::~xActionDrawLine()
+xActionDrawRegLine::~xActionDrawRegLine()
 {
 	if (!isFinished())
 		cancel();
 }
 
-void xActionDrawLine::mousePressEvent(QMouseEvent *e)
+void xActionDrawRegLine::mousePressEvent(QMouseEvent *e)
 {
 	auto spos = viewMapToScene(e);
 	if (e->button() == Qt::LeftButton)
@@ -49,7 +49,7 @@ void xActionDrawLine::mousePressEvent(QMouseEvent *e)
 	}
 }
 
-void xActionDrawLine::mouseMoveEvent(QMouseEvent *e)
+void xActionDrawRegLine::mouseMoveEvent(QMouseEvent *e)
 {
 	switch (m_status)
 	{
@@ -73,11 +73,11 @@ void xActionDrawLine::mouseMoveEvent(QMouseEvent *e)
 	}
 }
 
-void xActionDrawLine::mouseReleaseEvent(QMouseEvent *e)
+void xActionDrawRegLine::mouseReleaseEvent(QMouseEvent *e)
 {
 }
 
-void xActionDrawLine::cancel()
+void xActionDrawRegLine::cancel()
 {
 	if (m_line)
 	{

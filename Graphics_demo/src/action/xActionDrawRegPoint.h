@@ -6,11 +6,11 @@ class xRegPoint;
 /*
 * µãµÄÔ¤ÀÀ²ã 
 */
-class xActionDrawPoint : public xActionPreviewInterface
+class xActionDrawRegPoint : public xActionPreviewInterface
 {
 public:
-	xActionDrawPoint(xGraphicView* view);
-	~xActionDrawPoint();
+	xActionDrawRegPoint(xGraphicView* view);
+	~xActionDrawRegPoint();
 	void mousePressEvent(QMouseEvent* e) override;
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;

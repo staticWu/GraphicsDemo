@@ -38,6 +38,9 @@
         <height>600</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
      </widget>
     </item>
     <item>
@@ -92,9 +95,9 @@
           </widget>
          </item>
          <item row="2" column="0">
-          <widget class="QPushButton" name="pushButton_5">
+          <widget class="QPushButton" name="straightLineBtn">
            <property name="text">
-            <string>PushButton</string>
+            <string>直线</string>
            </property>
           </widget>
          </item>

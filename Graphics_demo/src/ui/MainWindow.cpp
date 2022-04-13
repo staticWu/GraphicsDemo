@@ -5,9 +5,10 @@
 #include <QPainter>
 #include <QStyleOption>
 
-#include "xActionDrawLine.h"
-#include "xActionDrawCircle.h"
-#include "xActionDrawPoint.h"
+#include "xActionDrawRegLine.h"
+#include "xActionDrawRegCircle.h"
+#include "xActionDrawRegPoint.h"
+#include "xActionDrawStraightLine.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -18,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	m_scene = new QGraphicsScene(this);
 	m_view = new xGraphicView(m_scene, ui.view_widget);
-	
+
 	auto hLayout1 = new QHBoxLayout(ui.view_widget);
 	hLayout1->setContentsMargins(0, 0, 0, 0);
 	hLayout1->setSpacing(0);
@@ -28,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui.lineBtn, &QPushButton::clicked, this, &MainWindow::onDrawLine);
 	connect(ui.circleBtn, &QPushButton::clicked, this, &MainWindow::onDrawCircle);
 	connect(ui.pointBtn, &QPushButton::clicked, this, &MainWindow::onDrawPoint);
+	connect(ui.straightLineBtn, &QPushButton::clicked, this, &MainWindow::onDrawStraightLine);
 }
 
 MainWindow::~MainWindow()
@@ -36,19 +38,25 @@ MainWindow::~MainWindow()
 
 void MainWindow::onDrawLine()
 {
-	xActionDrawLine *lineAction = new xActionDrawLine(m_view);
+	xActionDrawRegLine *lineAction = new xActionDrawRegLine(m_view);
 	m_view->setAction(lineAction);
 }
 
 void MainWindow::onDrawCircle()
 {
-	xActionDrawCircle *circleAction = new xActionDrawCircle(m_view);
+	xActionDrawRegCircle *circleAction = new xActionDrawRegCircle(m_view);
 	m_view->setAction(circleAction);
 }
 
 void MainWindow::onDrawPoint()
 {
-	xActionDrawPoint* pointAction = new xActionDrawPoint(m_view);
+	xActionDrawRegPoint* pointAction = new xActionDrawRegPoint(m_view);
+	m_view->setAction(pointAction);
+}
+
+void MainWindow::onDrawStraightLine()
+{
+	xActionDrawStraightLine* pointAction = new xActionDrawStraightLine(m_view);
 	m_view->setAction(pointAction);
 }
 

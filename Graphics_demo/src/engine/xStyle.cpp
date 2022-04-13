@@ -63,7 +63,7 @@ void xStyle::makeStyle(Style style, QPen *pen, QBrush *brush, qreal factor)
 		if (pen)
 		{
 			pen->setStyle(Qt::DashDotLine);
-			pen->setColor(Qt::yellow);
+			pen->setColor(Qt::red);
 			pen->setWidthF(3.0 / factor);
 		}
 		break;

@@ -39,6 +39,7 @@ public:
 		AT_DrawCircle,
 		AT_DrawArc,
 		AT_DrawPoint,
+		AT_DrawStraightLine
 	};
 	Q_ENUM(ActionType)
 

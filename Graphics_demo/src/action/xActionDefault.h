@@ -13,7 +13,7 @@ public:
 	void mousePressEvent(QMouseEvent *e) override;
 	void mouseMoveEvent(QMouseEvent *e) override;
 	void mouseReleaseEvent(QMouseEvent *e) override;
-
+	void hideAllRegionEntity();// 隐藏所有带范围实体
 private:
 	QPointF m_p;
 	xEntity *m_item = nullptr;

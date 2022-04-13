@@ -20,10 +20,10 @@ void xActionDefault::mousePressEvent(QMouseEvent *e)
 		auto gi = m_view->itemAt(e->pos());
 		if (gi == nullptr || gi->type() <= xEntity::ET_Unknown)
 		{		
+			hideAllRegionEntity(); 
 			return;
 		}
 		auto item = static_cast<xEntity *>(gi);
-
 		if (item->flags() & QGraphicsItem::ItemIsSelectable)
 		{
 			// 将当前图元堆叠在与其相撞的其它图元上面
@@ -39,7 +39,7 @@ void xActionDefault::mousePressEvent(QMouseEvent *e)
 			m_isGrabCtrlPoint = true;
 			m_item = item;
 			return;
-		}
+		}		
 		// 判断是否属于Region类型
 		if (item->type() > xEntity::ET_Region_Start && item->type() < xEntity::ET_Region_End)
 		{
@@ -50,6 +50,23 @@ void xActionDefault::mousePressEvent(QMouseEvent *e)
 				m_isGrabRegionEdge = true;
 				m_item = ri;
 				return;
+			}
+		}
+		// 判断是否属于entity类型
+		if (item->type() > xEntity::ET_Entity_Start && item->type() < xEntity::ET_Entity_End)
+		{
+			// 判断是否选中拟合实体
+			auto ri = static_cast<xEntity*>(gi);
+			if (ri->isFittingEntity(m_p))
+			{
+				m_item = ri;
+				hideAllRegionEntity(); // 隐藏所有带范围实体
+				if (m_item->parentItem() != nullptr)
+				{					
+					m_item->parentItem()->setOpacity(1.0); // 设置当前实体的父亲显示
+					return;
+				}
+				
 			}
 		}
 		// 判断是否移动图元
@@ -98,4 +115,17 @@ void xActionDefault::mouseReleaseEvent(QMouseEvent *e)
 	m_isGrabCtrlPoint = false;
 	m_isGrabRegionEdge = false;
 	m_item = nullptr;
+}
+
+void xActionDefault::hideAllRegionEntity()
+{
+	QList<QGraphicsItem*> list = m_scene->items();
+	foreach(QGraphicsItem * item, list)
+	{
+		if (item->type() > xEntity::ET_Region_Start && item->type() < xEntity::ET_Region_End)
+		{
+			auto item1 = static_cast<xEntity*>(item);
+			item1->hideThis();
+		}
+	}
 }

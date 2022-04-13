@@ -161,3 +161,10 @@ bool xLine::isCtrlPoint(const QPointF &p) const
 	return (Distance(pt1(), p) < DELTA_DIST_2 / viewScaleFactor()
 		|| Distance(pt2(), p) < DELTA_DIST_2 / viewScaleFactor());
 }
+
+bool xLine::isFittingEntity(const QPointF& p)
+{
+	if (fabs(DistancePoint2Line(p, m_line)) < DELTA_DIST_2 / viewScaleFactor())
+		return true;
+	return false;
+}

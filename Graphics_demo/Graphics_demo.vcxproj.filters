@@ -47,7 +47,7 @@
     <ClCompile Include="src\action\xActionInterface.cpp">
       <Filter>action</Filter>
     </ClCompile>
-    <ClCompile Include="src\action\xActionDrawLine.cpp">
+    <ClCompile Include="src\action\xActionDrawRegLine.cpp">
       <Filter>action</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\entity\xLine.cpp">
@@ -59,13 +59,10 @@
     <ClCompile Include="src\engine\xTypeDef.cpp">
       <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\entity\xCircle.cpp">
-      <Filter>engine\entity</Filter>
-    </ClCompile>
     <ClCompile Include="src\engine\xStyle.cpp">
       <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\action\xActionDrawCircle.cpp">
+    <ClCompile Include="src\action\xActionDrawRegCircle.cpp">
       <Filter>action</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\entity\xEntity.cpp">
@@ -86,7 +83,7 @@
     <ClCompile Include="src\engine\entity\xInterCoupleEntity.cpp">
       <Filter>engine\entity</Filter>
     </ClCompile>
-    <ClCompile Include="src\action\xActionDrawPoint.cpp">
+    <ClCompile Include="src\action\xActionDrawRegPoint.cpp">
       <Filter>action</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\entity\xInterLineAndLine.cpp">
@@ -103,6 +100,15 @@
     </ClCompile>
     <ClCompile Include="src\engine\entity\xInterCircle.cpp">
       <Filter>engine\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\entity\xStraightLine.cpp">
+      <Filter>engine\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\entity\xCircle.cpp">
+      <Filter>engine\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\action\xActionDrawStraightLine.cpp">
+      <Filter>action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +163,9 @@
     <QtMoc Include="src\engine\entity\xPoint.h">
       <Filter>engine\entity</Filter>
     </QtMoc>
+    <QtMoc Include="src\engine\entity\xStraightLine.h">
+      <Filter>engine\entity</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\ui\MainWindow.ui">
@@ -170,16 +179,19 @@
     <ClInclude Include="src\action\xActionDefault.h">
       <Filter>action</Filter>
     </ClInclude>
-    <ClInclude Include="src\action\xActionDrawLine.h">
+    <ClInclude Include="src\action\xActionDrawRegLine.h">
       <Filter>action</Filter>
     </ClInclude>
-    <ClInclude Include="src\action\xActionDrawCircle.h">
+    <ClInclude Include="src\action\xActionDrawRegCircle.h">
       <Filter>action</Filter>
     </ClInclude>
     <ClInclude Include="src\action\xActionPreviewInterface.h">
       <Filter>action</Filter>
     </ClInclude>
-    <ClInclude Include="src\action\xActionDrawPoint.h">
+    <ClInclude Include="src\action\xActionDrawRegPoint.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\action\xActionDrawStraightLine.h">
       <Filter>action</Filter>
     </ClInclude>
   </ItemGroup>

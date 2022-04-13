@@ -19,6 +19,7 @@ public slots:
 	void onDrawLine();
 	void onDrawCircle();
 	void onDrawPoint();
+	void onDrawStraightLine();
 
 protected:
 	void paintEvent(QPaintEvent *e) override;

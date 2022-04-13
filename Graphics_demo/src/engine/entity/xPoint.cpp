@@ -2,7 +2,7 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDebug>
 xPoint::xPoint(xGraphicView* view, QGraphicsItem* parent)
-	:xEntity(view,parent)
+	:xEntity(view,parent), m_point(0,0)
 {
 	setStyle(xStyle::Measured);
 }
@@ -11,6 +11,15 @@ xPoint::xPoint(const QPointF& p, xGraphicView* view, QGraphicsItem* parent)
 	: xEntity(view, parent), m_point(p)
 {
 	setStyle(xStyle::Measured);
+	// 叉的两条线计算
+	const qreal f = viewScaleFactor();
+	qreal w = 5.0 / f;
+	QPointF startP1 = { m_point.x() - w ,m_point.y() - w };
+	QPointF startP2 = { m_point.x() + w ,m_point.y() + w };
+	QPointF endP1 = { m_point.x() + w ,m_point.y() - w };
+	QPointF endP2 = { m_point.x() - w ,m_point.y() + w };
+	m_line1 = { startP1 ,startP2 };
+	m_line2 = { endP1 ,endP2 };
 }
 
 xPoint::~xPoint()
@@ -45,14 +54,6 @@ void xPoint::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 		}
 		xStyle::makeStyle(style, &m_pen, nullptr, f);
 	}
-	// 叉的两条线计算
-	qreal w = 5.0 / f;
-	QPointF startP1 = { m_point.x() - w ,m_point.y() - w };
-	QPointF startP2 = { m_point.x() + w ,m_point.y() + w };
-	QPointF endP1 = { m_point.x() + w ,m_point.y() - w };
-	QPointF endP2 = { m_point.x() - w ,m_point.y() + w };
-	m_line1 = { startP1 ,startP2 };
-	m_line2 = { endP1 ,endP2 };
 
 	m_pen.setStyle(Qt::SolidLine);// 默认选中是虚线
 	painter->setPen(m_pen);
@@ -93,6 +94,15 @@ void xPoint::setPt(const QPointF& p)
 	m_point.setX(p.x());
 	m_point.setY(p.y());
 
+	// 叉的两条线计算
+	const qreal f = viewScaleFactor();
+	qreal w = 5.0 / f;
+	QPointF startP1 = { m_point.x() - w ,m_point.y() - w };
+	QPointF startP2 = { m_point.x() + w ,m_point.y() + w };
+	QPointF endP1 = { m_point.x() + w ,m_point.y() - w };
+	QPointF endP2 = { m_point.x() - w ,m_point.y() + w };
+	m_line1 = { startP1 ,startP2 };
+	m_line2 = { endP1 ,endP2 };
 
 	update();
 }
@@ -126,5 +136,10 @@ bool xPoint::isCtrlPoint(const QPointF& p) const
 	if (!(flags() & ItemIsMovable))
 		return false;
 
+	return  Distance(p, pt()) < DELTA_DIST_2 / viewScaleFactor();
+}
+
+bool xPoint::isFittingEntity(const QPointF& p)
+{
 	return  Distance(p, pt()) < DELTA_DIST_2 / viewScaleFactor();
 }

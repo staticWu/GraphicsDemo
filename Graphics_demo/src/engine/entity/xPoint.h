@@ -30,6 +30,7 @@ public:
 	QList<QPointF> controlPoints() const override;
 	void moveCtrlPoint(const QPointF& p, const QPointF& movedPt) override;
 	bool isCtrlPoint(const QPointF& p) const override;
+	bool isFittingEntity(const QPointF& p) override;
 protected:
 	QPointF m_point;
 	QLineF m_line1; // 一个点用一个叉表示 线1表示左上角到右下角 线2表示右上角到左下角

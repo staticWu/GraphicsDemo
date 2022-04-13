@@ -64,24 +64,16 @@ void xRegPoint::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
 	}
 	// 填充范围
 	painter->fillPath(path, m_brush);
-	// 画中心点 叉
+	// 画中心点 
 	m_pen.setStyle(Qt::SolidLine);// 默认选中是虚线
 	painter->setPen(m_pen);
-	// 叉的两条线计算
-	qreal w = 2.0 / f;
-	QPointF startP1 = { m_regPoint.center().x() - w , m_regPoint.center().y() - w };
-	QPointF startP2 = { m_regPoint.center().x() + w ,m_regPoint.center().y() + w };
-	QPointF endP1 = { m_regPoint.center().x() + w ,m_regPoint.center().y() - w };
-	QPointF endP2 = { m_regPoint.center().x() - w ,m_regPoint.center().y() + w };
-	painter->drawLine(startP1, startP2);
-	painter->drawLine(endP1, endP2);
-	minWidth = w + 1 / f;
+	painter->drawEllipse(m_regPoint.center(), r+m_width, r + m_width);
 
 	// 选中时绘画控制点
 	if ((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable))
 	{
-		painter->drawLine(startP1, startP2);
-		painter->drawLine(endP1, endP2);
+		const qreal w = m_pen.widthF();
+		painter->fillRect(QRectF(m_regPoint.center().x() - w, m_regPoint.center().y() - w, w + w, w + w), Qt::yellow);
 	}
 }
 
@@ -199,4 +191,5 @@ bool xRegPoint::isRegionEdge(const QPointF& p) const
 		return true;
 	return false;
 }
+
 

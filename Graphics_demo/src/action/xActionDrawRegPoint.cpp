@@ -1,18 +1,18 @@
-#include "xActionDrawPoint.h"
+#include "xActionDrawRegPoint.h"
 #include "xRegPoint.h"
 #include <QMouseEvent>
-xActionDrawPoint::xActionDrawPoint(xGraphicView* view)
+xActionDrawRegPoint::xActionDrawRegPoint(xGraphicView* view)
 	: xActionPreviewInterface(view, xDef::AT_DrawPoint)
 {
 }
 
-xActionDrawPoint::~xActionDrawPoint()
+xActionDrawRegPoint::~xActionDrawRegPoint()
 {
 	if (!isFinished())
 		cancel();
 }
 
-void xActionDrawPoint::mousePressEvent(QMouseEvent* e)
+void xActionDrawRegPoint::mousePressEvent(QMouseEvent* e)
 {
 	auto spos = viewMapToScene(e);
 	if (e->button() == Qt::LeftButton)
@@ -41,15 +41,15 @@ void xActionDrawPoint::mousePressEvent(QMouseEvent* e)
 	}
 }
 
-void xActionDrawPoint::mouseMoveEvent(QMouseEvent* e)
+void xActionDrawRegPoint::mouseMoveEvent(QMouseEvent* e)
 {
 }
 
-void xActionDrawPoint::mouseReleaseEvent(QMouseEvent* e)
+void xActionDrawRegPoint::mouseReleaseEvent(QMouseEvent* e)
 {
 }
 
-void xActionDrawPoint::cancel()
+void xActionDrawRegPoint::cancel()
 {
 	if (m_regPoint)
 	{
