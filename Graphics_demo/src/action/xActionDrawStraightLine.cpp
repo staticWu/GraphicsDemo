@@ -39,7 +39,6 @@ void xActionDrawStraightLine::mousePressEvent(QMouseEvent* e)
 					m_line->setLine(temp->lineData());
 					m_line->setAnchorPoint1(temp->anchorPoint1());
 					m_line->setAnchorPoint2(temp->anchorPoint2());
-					m_line->setStyle(xStyle::Drawn);
 
 					// 操作完成，设置为S_ActionFinished
 					m_status = xDef::S_ActionFinished;
@@ -59,16 +58,9 @@ void xActionDrawStraightLine::mousePressEvent(QMouseEvent* e)
 			{
 				mp2 = spos;
 
-				calStraighLinePoints();
-				if (pt1.isNull() || pt2.isNull())
-					return mouseMoveEvent(e);
-
-				m_line->setLine(pt1, pt2);
 				m_line->setAnchorPoint1(mp);
 				m_line->setAnchorPoint2(mp2);
 				m_line->setStyle(xStyle::Drawn);
-				// TEST
-				//m_line->setSubLine(mp, spos);
 
 				// 操作完成，设置为S_ActionFinished
 				m_status = xDef::S_ActionFinished;
@@ -92,16 +84,14 @@ void xActionDrawStraightLine::mouseMoveEvent(QMouseEvent* e)
 			if (m_line == nullptr)
 			{
 				m_line = new xStraightLine(m_view);
-				m_line->setStyle(xStyle::Drawn);
+				m_line->setStyle(xStyle::Drawing);
 				m_scene->addItem(m_line);
 			}
 			// 计算直线的两点位置
 			mp2 = viewMapToScene(e);
-			calStraighLinePoints();
-			if (pt1.isNull() || pt2.isNull())
-				return mouseMoveEvent(e);
+
+			m_line->setAnchorPoint1(mp);
 			m_line->setAnchorPoint2(mp2);
-			m_line->setLine(pt1, pt2);
 
 			e->accept();
 		}
@@ -127,37 +117,3 @@ void xActionDrawStraightLine::cancel()
 	m_status = xDef::S_Default;
 }
 
-void xActionDrawStraightLine::calStraighLinePoints()
-{
-	// 计算画线的起始点和结束点 根据点的直线方程 k = (y2-y1) / (x2-x1)
-	if (mp.isNull() || mp2.isNull())
-		return;
-
-	double disX = mp2.x() - mp.x();
-	if (disX == 0) // 垂直时
-	{
-		pt1.setX(mp.x());
-		pt1.setY(0);
-		pt2.setX(mp.x());
-		pt2.setY(m_view->height());
-		return;
-	}
-
-	double k = (mp2.y() - mp.y()) / disX;
-	if (k == 0)  // 平行时
-	{
-		pt1.setX(0);
-		pt1.setY(mp.y());
-		pt2.setX(m_view->width());
-		pt2.setY(mp.y());
-	}
-	else // 开始点小于结束点
-	{
-		pt1.setY(0);
-		pt2.setY(m_view->height());
-		double startX = (pt1.y() - mp.y()) / k + mp.x();
-		double endX = (pt2.y() - mp.y()) / k + mp.x();
-		pt1.setX(startX);
-		pt2.setX(endX);
-	}
-}

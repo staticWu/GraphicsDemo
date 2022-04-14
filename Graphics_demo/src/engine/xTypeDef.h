@@ -38,8 +38,12 @@ public:
 		AT_DrawLine,
 		AT_DrawCircle,
 		AT_DrawArc,
-		AT_DrawPoint,
-		AT_DrawStraightLine
+		AT_DrawStraightLine,
+		AT_DrawRegLine,
+		AT_DrawRegCircle,
+		AT_DrawRegArc,
+		AT_DrawRegPoint,
+		AT_DrawRegStraightLine
 	};
 	Q_ENUM(ActionType)
 

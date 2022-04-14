@@ -18,9 +18,11 @@ public:
 public slots:
 	void onDrawLine();
 	void onDrawCircle();
-	void onDrawPoint();
 	void onDrawStraightLine();
-
+	void onDrawRegLine();
+	void onDrawRegCircle();
+	void onDrawRegPoint();
+	void onDrawRegStraightLine();
 protected:
 	void paintEvent(QPaintEvent *e) override;
 	bool eventFilter(QObject *obj, QEvent *e) override;

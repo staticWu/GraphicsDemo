@@ -207,7 +207,7 @@ void xStraightLine::calStraighLinePoints()
 		pt1.setX(anchorPoint1().x());
 		pt1.setY(0);
 		pt2.setX(anchorPoint1().x());
-		pt2.setY(m_view->height());
+		pt2.setY(m_view->scene()->height());
 		setLine(pt1, pt2);
 		return;
 	}
@@ -217,14 +217,14 @@ void xStraightLine::calStraighLinePoints()
 	{
 		pt1.setX(0);
 		pt1.setY(anchorPoint1().y());
-		pt2.setX(m_view->width());
+		pt2.setX(m_view->scene()->width());
 		pt2.setY(anchorPoint1().y());
 		setLine(pt1, pt2);
 	}
 	else // 开始点小于结束点
 	{
 		pt1.setY(0);
-		pt2.setY(m_view->height());
+		pt2.setY(m_view->scene()->height());
 		double startX = (pt1.y() - anchorPoint1().y()) / k + anchorPoint1().x();
 		double endX = (pt2.y() - anchorPoint1().y()) / k + anchorPoint1().x();
 		pt1.setX(startX);

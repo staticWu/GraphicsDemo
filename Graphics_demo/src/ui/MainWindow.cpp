@@ -9,6 +9,8 @@
 #include "xActionDrawRegCircle.h"
 #include "xActionDrawRegPoint.h"
 #include "xActionDrawStraightLine.h"
+#include "xActionDrawLine.h"
+#include "xActionDrawCircle.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -28,27 +30,31 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui.action_quit, &QAction::triggered, this, &QWidget::close);
 	connect(ui.lineBtn, &QPushButton::clicked, this, &MainWindow::onDrawLine);
 	connect(ui.circleBtn, &QPushButton::clicked, this, &MainWindow::onDrawCircle);
-	connect(ui.pointBtn, &QPushButton::clicked, this, &MainWindow::onDrawPoint);
 	connect(ui.straightLineBtn, &QPushButton::clicked, this, &MainWindow::onDrawStraightLine);
+	connect(ui.regLineBtn, &QPushButton::clicked, this, &MainWindow::onDrawRegLine);
+	connect(ui.regCircleBtn, &QPushButton::clicked, this, &MainWindow::onDrawRegCircle);
+	connect(ui.regPointBtn, &QPushButton::clicked, this, &MainWindow::onDrawRegPoint);
+	connect(ui.regStraightLineBtn, &QPushButton::clicked, this, &MainWindow::onDrawRegStraightLine);
 }
 
 MainWindow::~MainWindow()
 {
+
 }
 
 void MainWindow::onDrawLine()
 {
-	xActionDrawRegLine *lineAction = new xActionDrawRegLine(m_view);
-	m_view->setAction(lineAction);
+	xActionDrawLine* pointAction = new xActionDrawLine(m_view);
+	m_view->setAction(pointAction);
 }
 
 void MainWindow::onDrawCircle()
 {
-	xActionDrawRegCircle *circleAction = new xActionDrawRegCircle(m_view);
-	m_view->setAction(circleAction);
+	xActionDrawCircle* pointAction = new xActionDrawCircle(m_view);
+	m_view->setAction(pointAction);
 }
 
-void MainWindow::onDrawPoint()
+void MainWindow::onDrawRegPoint()
 {
 	xActionDrawRegPoint* pointAction = new xActionDrawRegPoint(m_view);
 	m_view->setAction(pointAction);
@@ -58,6 +64,23 @@ void MainWindow::onDrawStraightLine()
 {
 	xActionDrawStraightLine* pointAction = new xActionDrawStraightLine(m_view);
 	m_view->setAction(pointAction);
+}
+
+void MainWindow::onDrawRegLine()
+{
+	xActionDrawRegLine* lineAction = new xActionDrawRegLine(m_view);
+	m_view->setAction(lineAction);
+}
+
+void MainWindow::onDrawRegCircle()
+{
+	xActionDrawRegCircle* circleAction = new xActionDrawRegCircle(m_view);
+	m_view->setAction(circleAction);
+}
+
+
+void MainWindow::onDrawRegStraightLine()
+{
 }
 
 void MainWindow::paintEvent(QPaintEvent *e)

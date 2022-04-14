@@ -110,6 +110,15 @@
     <ClCompile Include="src\action\xActionDrawStraightLine.cpp">
       <Filter>action</Filter>
     </ClCompile>
+    <ClCompile Include="src\action\xActionDrawLine.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="src\action\xActionDrawCircle.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="src\action\xActionDrawRegStraightLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
@@ -193,6 +202,15 @@
     </ClInclude>
     <ClInclude Include="src\action\xActionDrawStraightLine.h">
       <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\action\xActionDrawLine.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\action\xActionDrawCircle.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\action\xActionDrawRegStraightLine.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

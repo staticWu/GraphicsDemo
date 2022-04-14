@@ -2,7 +2,7 @@
 #include "xRegPoint.h"
 #include <QMouseEvent>
 xActionDrawRegPoint::xActionDrawRegPoint(xGraphicView* view)
-	: xActionPreviewInterface(view, xDef::AT_DrawPoint)
+	: xActionPreviewInterface(view, xDef::AT_DrawRegPoint)
 {
 }
 

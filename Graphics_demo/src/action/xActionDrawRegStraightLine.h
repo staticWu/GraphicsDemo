@@ -3,13 +3,14 @@
 #include "xActionPreviewInterface.h"
 #include <QPoint>
 class xStraightLine;
-class xActionDrawStraightLine : public xActionPreviewInterface
+class xRegLine;
+
+class xActionDrawRegStraightLine : public xActionPreviewInterface
 {
 
 public:
-	xActionDrawStraightLine(xGraphicView* view);
-	~xActionDrawStraightLine();
-
+	xActionDrawRegStraightLine(xGraphicView* view);
+	~xActionDrawRegStraightLine();
 	void mousePressEvent(QMouseEvent* e) override;
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
