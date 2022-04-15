@@ -43,7 +43,8 @@ public:
 		AT_DrawRegCircle,
 		AT_DrawRegArc,
 		AT_DrawRegPoint,
-		AT_DrawRegStraightLine
+		AT_DrawRegStraightLine,
+		AT_DrawConcentricCircle,
 	};
 	Q_ENUM(ActionType)
 
@@ -93,6 +94,7 @@ struct xCircleData
 	xCircleData(const QPointF &center, qreal radius);
 	xCircleData(qreal cx, qreal cy, qreal radius);
 	xCircleData(const QPointF &p1, const QPointF &p2, const QPointF &p3);
+	xCircleData(const QPointF &c, const QPointF &p2);// 两点构成一个圆，第一个点为圆心，计算半径
 
 	constexpr QPointF center() const { return c; }
 	void setCenter(const QPointF &center);

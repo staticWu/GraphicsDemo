@@ -117,10 +117,16 @@
       <Filter>action</Filter>
     </ClCompile>
     <ClCompile Include="src\action\xActionDrawRegStraightLine.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>action</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\entity\xRegStraightLine.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>engine\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\action\xDrawConcentricCircle.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\entity\xConcentricCircle.cpp">
+      <Filter>engine\entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +185,10 @@
       <Filter>engine\entity</Filter>
     </QtMoc>
     <QtMoc Include="src\engine\entity\xRegStraightLine.h">
-      <Filter>Header Files</Filter>
+      <Filter>engine\entity</Filter>
+    </QtMoc>
+    <QtMoc Include="src\engine\entity\xConcentricCircle.h">
+      <Filter>engine\entity</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -216,7 +225,10 @@
       <Filter>action</Filter>
     </ClInclude>
     <ClInclude Include="src\action\xActionDrawRegStraightLine.h">
-      <Filter>Header Files</Filter>
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\action\xDrawConcentricCircle.h">
+      <Filter>action</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

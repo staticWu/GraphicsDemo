@@ -12,6 +12,7 @@
 #include "xActionDrawStraightLine.h"
 #include "xActionDrawLine.h"
 #include "xActionDrawCircle.h"
+#include "xDrawConcentricCircle.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -36,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui.regCircleBtn, &QPushButton::clicked, this, &MainWindow::onDrawRegCircle);
 	connect(ui.regPointBtn, &QPushButton::clicked, this, &MainWindow::onDrawRegPoint);
 	connect(ui.regStraightLineBtn, &QPushButton::clicked, this, &MainWindow::onDrawRegStraightLine);
+	connect(ui.concentricCircleBtn, &QPushButton::clicked, this, &MainWindow::onDrawConcentricCircle);
 }
 
 MainWindow::~MainWindow()
@@ -84,6 +86,12 @@ void MainWindow::onDrawRegStraightLine()
 {
 	xActionDrawRegStraightLine* lineAction = new xActionDrawRegStraightLine(m_view);
 	m_view->setAction(lineAction);
+}
+
+void MainWindow::onDrawConcentricCircle()
+{
+	xDrawConcentricCircle* circleAction = new xDrawConcentricCircle(m_view);
+	m_view->setAction(circleAction);
 }
 
 void MainWindow::paintEvent(QPaintEvent *e)

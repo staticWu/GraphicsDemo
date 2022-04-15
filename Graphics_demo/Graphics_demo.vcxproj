@@ -121,7 +121,9 @@
     <ClCompile Include="src\action\xActionDrawStraightLine.cpp" />
     <ClCompile Include="src\action\xActionInterface.cpp" />
     <ClCompile Include="src\action\xActionPreviewInterface.cpp" />
+    <ClCompile Include="src\action\xDrawConcentricCircle.cpp" />
     <ClCompile Include="src\engine\entity\xCircle.cpp" />
+    <ClCompile Include="src\engine\entity\xConcentricCircle.cpp" />
     <ClCompile Include="src\engine\entity\xEntity.cpp" />
     <ClCompile Include="src\engine\entity\xInterCircle.cpp" />
     <ClCompile Include="src\engine\entity\xInterCoupleEntity.cpp" />
@@ -160,6 +162,8 @@
     <ClInclude Include="src\action\xActionDrawRegStraightLine.h" />
     <ClInclude Include="src\action\xActionDrawStraightLine.h" />
     <ClInclude Include="src\action\xActionInterface.h" />
+    <ClInclude Include="src\action\xDrawConcentricCircle.h" />
+    <QtMoc Include="src\engine\entity\xConcentricCircle.h" />
     <QtMoc Include="src\engine\entity\xRegStraightLine.h" />
     <QtMoc Include="src\engine\entity\xStraightLine.h" />
     <QtMoc Include="src\engine\entity\xInterCircle.h" />

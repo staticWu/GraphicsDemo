@@ -45,6 +45,14 @@ xCircleData::xCircleData(const QPointF &p1, const QPointF &p2, const QPointF &p3
 	createFrom3P();
 }
 
+xCircleData::xCircleData(const QPointF& c, const QPointF& p2)
+	: c(c)
+{
+	r = sqrt(pow(p2.x() - c.x(), 2) + pow(p2.y() - c.y(), 2));
+
+	generate3P();
+}
+
 void xCircleData::setCenter(const QPointF &center)
 {
 	if (center == c)
