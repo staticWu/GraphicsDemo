@@ -133,6 +133,7 @@
     <ClCompile Include="src\engine\entity\xRegionEntity.cpp" />
     <ClCompile Include="src\engine\entity\xRegLine.cpp" />
     <ClCompile Include="src\engine\entity\xRegPoint.cpp" />
+    <ClCompile Include="src\engine\entity\xRegStraightLine.cpp" />
     <ClCompile Include="src\engine\entity\xStraightLine.cpp" />
     <ClCompile Include="src\engine\xGraphicView.cpp" />
     <ClCompile Include="src\engine\xStyle.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="src\action\xActionDrawRegStraightLine.h" />
     <ClInclude Include="src\action\xActionDrawStraightLine.h" />
     <ClInclude Include="src\action\xActionInterface.h" />
+    <QtMoc Include="src\engine\entity\xRegStraightLine.h" />
     <QtMoc Include="src\engine\entity\xStraightLine.h" />
     <QtMoc Include="src\engine\entity\xInterCircle.h" />
     <QtMoc Include="src\engine\entity\xInterSingleEntity.h" />

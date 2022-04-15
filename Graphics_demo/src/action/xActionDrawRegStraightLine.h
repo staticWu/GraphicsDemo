@@ -1,9 +1,8 @@
 #pragma once
 
 #include "xActionPreviewInterface.h"
-#include <QPoint>
-class xStraightLine;
-class xRegLine;
+
+class xRegStraightLine;
 
 class xActionDrawRegStraightLine : public xActionPreviewInterface
 {
@@ -19,5 +18,5 @@ public:
 private:
 	QPointF mp;// 传入两个定位点，根据定位点计算直线两个端点
 	QPointF mp2;
-	xStraightLine* m_line = nullptr;
+	xRegStraightLine* m_line = nullptr;
 };

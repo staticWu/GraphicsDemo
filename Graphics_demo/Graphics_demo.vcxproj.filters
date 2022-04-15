@@ -119,6 +119,9 @@
     <ClCompile Include="src\action\xActionDrawRegStraightLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\entity\xRegStraightLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
@@ -174,6 +177,9 @@
     </QtMoc>
     <QtMoc Include="src\engine\entity\xStraightLine.h">
       <Filter>engine\entity</Filter>
+    </QtMoc>
+    <QtMoc Include="src\engine\entity\xRegStraightLine.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

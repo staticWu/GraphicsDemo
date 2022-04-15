@@ -8,6 +8,7 @@
 #include "xActionDrawRegLine.h"
 #include "xActionDrawRegCircle.h"
 #include "xActionDrawRegPoint.h"
+#include "xActionDrawRegStraightLine.h"
 #include "xActionDrawStraightLine.h"
 #include "xActionDrawLine.h"
 #include "xActionDrawCircle.h"
@@ -44,14 +45,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::onDrawLine()
 {
-	xActionDrawLine* pointAction = new xActionDrawLine(m_view);
-	m_view->setAction(pointAction);
+	xActionDrawLine* lineAction = new xActionDrawLine(m_view);
+	m_view->setAction(lineAction);
 }
 
 void MainWindow::onDrawCircle()
 {
-	xActionDrawCircle* pointAction = new xActionDrawCircle(m_view);
-	m_view->setAction(pointAction);
+	xActionDrawCircle* circleAction = new xActionDrawCircle(m_view);
+	m_view->setAction(circleAction);
 }
 
 void MainWindow::onDrawRegPoint()
@@ -62,8 +63,8 @@ void MainWindow::onDrawRegPoint()
 
 void MainWindow::onDrawStraightLine()
 {
-	xActionDrawStraightLine* pointAction = new xActionDrawStraightLine(m_view);
-	m_view->setAction(pointAction);
+	xActionDrawStraightLine* lineAction = new xActionDrawStraightLine(m_view);
+	m_view->setAction(lineAction);
 }
 
 void MainWindow::onDrawRegLine()
@@ -81,6 +82,8 @@ void MainWindow::onDrawRegCircle()
 
 void MainWindow::onDrawRegStraightLine()
 {
+	xActionDrawRegStraightLine* lineAction = new xActionDrawRegStraightLine(m_view);
+	m_view->setAction(lineAction);
 }
 
 void MainWindow::paintEvent(QPaintEvent *e)
