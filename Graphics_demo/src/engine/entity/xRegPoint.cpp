@@ -64,10 +64,7 @@ void xRegPoint::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
 	}
 	// 填充范围
 	painter->fillPath(path, m_brush);
-	// 画中心点 
-	m_pen.setStyle(Qt::SolidLine);// 默认选中是虚线
-	painter->setPen(m_pen);
-	painter->drawEllipse(m_regPoint.center(), r+m_width, r + m_width);
+	
 
 	// 选中时绘画控制点
 	if ((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable))

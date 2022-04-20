@@ -45,6 +45,7 @@ public:
 		AT_DrawRegPoint,
 		AT_DrawRegStraightLine,
 		AT_DrawConcentricCircle,
+		AT_DrawVerticalLine,
 	};
 	Q_ENUM(ActionType)
 

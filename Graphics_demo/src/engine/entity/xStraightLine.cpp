@@ -1,5 +1,6 @@
 #include "xStraightLine.h"
 #include <QStyleOptionGraphicsItem>
+#include <QDebug>
 xStraightLine::xStraightLine(xGraphicView* view, QGraphicsItem* parent)
 	:xEntity(view,parent)
 {
@@ -98,7 +99,6 @@ void xStraightLine::setLine(const QPointF& p1, const QPointF& p2)
 	prepareGeometryChange();
 	m_line.setPoints(p1, p2);
 	update();
-	emit shapeChanged();
 }
 
 void xStraightLine::setPt1(const QPointF& p)
@@ -109,7 +109,6 @@ void xStraightLine::setPt1(const QPointF& p)
 	prepareGeometryChange();
 	m_line.setP1(p);
 	update();
-	emit shapeChanged();
 }
 
 void xStraightLine::setPt2(const QPointF& p)
@@ -120,7 +119,6 @@ void xStraightLine::setPt2(const QPointF& p)
 	prepareGeometryChange();
 	m_line.setP2(p);
 	update();
-	emit shapeChanged();
 }
 
 void xStraightLine::setAnchorPoint1(const QPointF& p)
@@ -132,7 +130,6 @@ void xStraightLine::setAnchorPoint1(const QPointF& p)
 	m_point1 = p;
 	calStraighLinePoints(); // 重新计算直线端点
 	update();
-	emit shapeChanged();
 }
 
 void xStraightLine::setAnchorPoint2(const QPointF& p)
@@ -144,7 +141,6 @@ void xStraightLine::setAnchorPoint2(const QPointF& p)
 	m_point2 = p;
 	calStraighLinePoints(); // 重新计算直线端点
 	update();
-	emit shapeChanged();
 }
 
 void xStraightLine::moveBy(const QPointF& delta)

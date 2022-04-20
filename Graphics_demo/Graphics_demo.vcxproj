@@ -119,6 +119,7 @@
     <ClCompile Include="src\action\xActionDrawRegPoint.cpp" />
     <ClCompile Include="src\action\xActionDrawRegStraightLine.cpp" />
     <ClCompile Include="src\action\xActionDrawStraightLine.cpp" />
+    <ClCompile Include="src\action\xActionDrawVerticalLine.cpp" />
     <ClCompile Include="src\action\xActionInterface.cpp" />
     <ClCompile Include="src\action\xActionPreviewInterface.cpp" />
     <ClCompile Include="src\action\xDrawConcentricCircle.cpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="src\engine\entity\xRegPoint.cpp" />
     <ClCompile Include="src\engine\entity\xRegStraightLine.cpp" />
     <ClCompile Include="src\engine\entity\xStraightLine.cpp" />
+    <ClCompile Include="src\engine\entity\xVerticalLine.cpp" />
     <ClCompile Include="src\engine\xGraphicView.cpp" />
     <ClCompile Include="src\engine\xStyle.cpp" />
     <ClCompile Include="src\engine\xTypeDef.cpp" />
@@ -161,8 +163,10 @@
     <ClInclude Include="src\action\xActionDrawRegPoint.h" />
     <ClInclude Include="src\action\xActionDrawRegStraightLine.h" />
     <ClInclude Include="src\action\xActionDrawStraightLine.h" />
+    <ClInclude Include="src\action\xActionDrawVerticalLine.h" />
     <ClInclude Include="src\action\xActionInterface.h" />
     <ClInclude Include="src\action\xDrawConcentricCircle.h" />
+    <QtMoc Include="src\engine\entity\xVerticalLine.h" />
     <QtMoc Include="src\engine\entity\xConcentricCircle.h" />
     <QtMoc Include="src\engine\entity\xRegStraightLine.h" />
     <QtMoc Include="src\engine\entity\xStraightLine.h" />

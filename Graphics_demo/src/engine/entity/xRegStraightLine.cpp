@@ -191,10 +191,10 @@ void xRegStraightLine::setAnchorPoint1(const QPointF& p)
 	prepareGeometryChange();
 	m_regLine->setPt1(p);
 
-	QList<QPointF> list = calStraighLinePoints(p,anchorPoint2());
+	/*QList<QPointF> list = calStraighLinePoints(p,anchorPoint2());
 	if (list.isEmpty() && list.count() < 2)
 		return;
-	m_straightLine->setLine(list[0], list[1]);
+	m_straightLine->setLine(list[0], list[1]);*/
 	update();
 }
 
@@ -206,10 +206,10 @@ void xRegStraightLine::setAnchorPoint2(const QPointF& p)
 	prepareGeometryChange();
 	m_regLine->setPt2(p);
 
-	QList<QPointF> list = calStraighLinePoints(anchorPoint1(), p);
+	/*QList<QPointF> list = calStraighLinePoints(anchorPoint1(), p);
 	if (list.isEmpty() && list.count() < 2)
 		return;
-	m_straightLine->setLine(list[0], list[1]);
+	m_straightLine->setLine(list[0], list[1]);*/
 	update();
 }
 

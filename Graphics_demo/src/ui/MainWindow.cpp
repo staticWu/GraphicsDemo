@@ -13,7 +13,7 @@
 #include "xActionDrawLine.h"
 #include "xActionDrawCircle.h"
 #include "xDrawConcentricCircle.h"
-
+#include "xActionDrawVerticalLine.h"
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui.regPointBtn, &QPushButton::clicked, this, &MainWindow::onDrawRegPoint);
 	connect(ui.regStraightLineBtn, &QPushButton::clicked, this, &MainWindow::onDrawRegStraightLine);
 	connect(ui.concentricCircleBtn, &QPushButton::clicked, this, &MainWindow::onDrawConcentricCircle);
+	connect(ui.verticalBtn, &QPushButton::clicked, this, &MainWindow::onDrawVerticalLine);
 }
 
 MainWindow::~MainWindow()
@@ -92,6 +93,12 @@ void MainWindow::onDrawConcentricCircle()
 {
 	xDrawConcentricCircle* circleAction = new xDrawConcentricCircle(m_view);
 	m_view->setAction(circleAction);
+}
+
+void MainWindow::onDrawVerticalLine()
+{
+	xActionDrawVerticalLine* lineAction = new xActionDrawVerticalLine(m_view);
+	m_view->setAction(lineAction);
 }
 
 void MainWindow::paintEvent(QPaintEvent *e)

@@ -68,40 +68,40 @@ void xStyle::makeStyle(Style style, QPen *pen, QBrush *brush, qreal factor)
 		}
 		break;
 
-		// 带范围实体样式
+		// 带范围实体样式 带范围实体全是红色样式
 	case xStyle::RegDrawing:
 		if (pen)
 		{
-			pen->setStyle(Qt::SolidLine);
-			pen->setColor(QColor(255, 105, 0, 200));
+			pen->setStyle(Qt::DashLine);
+			pen->setColor(Qt::red);
 			pen->setWidthF(2.0 / factor);
 		}
 		if (brush)
 		{
 			brush->setStyle(Qt::SolidPattern);
-			brush->setColor(QColor(255, 105, 0, 80));
+			brush->setColor(QColor(112, 0, 0));
 		}
 		break;
 
 	case xStyle::RegDrawn:
 		if (pen)
 		{
-			pen->setStyle(Qt::SolidLine);
-			pen->setColor(QColor(0, 50, 225, 255));
+			pen->setStyle(Qt::DashLine);
+			pen->setColor(Qt::red);
 			pen->setWidthF(2.0 / factor);
 		}
 		if (brush)
 		{
 			brush->setStyle(Qt::SolidPattern);
-			brush->setColor(QColor(0, 50, 200, 80));
+			brush->setColor(QColor(112, 0, 0));
 		}
 		break;
 
 	case xStyle::RegMeasured:
 		if (pen)
 		{
-			pen->setStyle(Qt::SolidLine);
-			pen->setColor(Qt::green);
+			pen->setStyle(Qt::DashLine);
+			pen->setColor(Qt::red);
 			pen->setWidthF(2.5 / factor);
 		}
 		if (brush)
@@ -113,7 +113,7 @@ void xStyle::makeStyle(Style style, QPen *pen, QBrush *brush, qreal factor)
 	case xStyle::RegFailed:
 		if (pen)
 		{
-			pen->setStyle(Qt::SolidLine);
+			pen->setStyle(Qt::DashLine);
 			pen->setColor(Qt::red);
 			pen->setWidthF(2.5 / factor);
 		}
@@ -126,28 +126,28 @@ void xStyle::makeStyle(Style style, QPen *pen, QBrush *brush, qreal factor)
 	case xStyle::RegSelected:
 		if (pen)
 		{
-			pen->setStyle(Qt::DashDotLine);
-			pen->setColor(QColor(255, 105, 0, 255));
+			pen->setStyle(Qt::DashLine);
+			pen->setColor(Qt::red);
 			pen->setWidthF(3.0 / factor);
 		}
 		if (brush)
 		{
 			brush->setStyle(Qt::SolidPattern);
-			brush->setColor(QColor(255, 105, 0, 100));
+			brush->setColor(QColor(112, 0, 0));
 		}
 		break;
 
 	case xStyle::RegHovered:
 		if (pen)
 		{
-			pen->setStyle(Qt::SolidLine);
-			pen->setColor(Qt::yellow);
+			pen->setStyle(Qt::DashLine);
+			pen->setColor(Qt::red);
 			pen->setWidthF(3.0 / factor);
 		}
 		if (brush)
 		{
 			brush->setStyle(Qt::SolidPattern);
-			brush->setColor(QColor(255, 255, 0, 100));
+			brush->setColor(QColor(112, 0, 0));
 		}
 		break;
 

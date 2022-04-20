@@ -24,6 +24,7 @@ public:
 		ET_Point,
 		ET_StraightLine,
 		ET_ConcentricCircle,
+		ET_VerticalLine,
 		ET_Entity_End,
 		// ´ø·¶Î§µÄÍ¼Ôª
 		ET_Region_Start,

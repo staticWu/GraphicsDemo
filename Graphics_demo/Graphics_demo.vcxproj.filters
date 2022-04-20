@@ -128,6 +128,12 @@
     <ClCompile Include="src\engine\entity\xConcentricCircle.cpp">
       <Filter>engine\entity</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\entity\xVerticalLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\action\xActionDrawVerticalLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
@@ -190,6 +196,9 @@
     <QtMoc Include="src\engine\entity\xConcentricCircle.h">
       <Filter>engine\entity</Filter>
     </QtMoc>
+    <QtMoc Include="src\engine\entity\xVerticalLine.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\ui\MainWindow.ui">
@@ -229,6 +238,9 @@
     </ClInclude>
     <ClInclude Include="src\action\xDrawConcentricCircle.h">
       <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\action\xActionDrawVerticalLine.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

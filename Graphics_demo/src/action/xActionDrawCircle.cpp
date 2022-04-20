@@ -51,7 +51,7 @@ void xActionDrawCircle::mousePressEvent(QMouseEvent* e)
 			if (Distance(mp1, spos) > DELTA_DIST_2 && Distance(mp2, spos) > DELTA_DIST_2)
 			{
 				m_circle->setCircle(mp1, mp2, viewMapToScene(e));
-				m_circle->setStyle(xStyle::RegDrawn);
+				m_circle->setStyle(xStyle::Drawn);
 
 				// 操作完成，设置为S_ActionFinished
 				m_status = xDef::S_ActionFinished;
@@ -98,7 +98,7 @@ void xActionDrawCircle::mouseMoveEvent(QMouseEvent* e)
 		if (m_circle == nullptr)
 		{
 			m_circle = new xCircle(m_view);
-			m_circle->setStyle(xStyle::RegDrawing);
+			m_circle->setStyle(xStyle::Drawing);
 			m_scene->addItem(m_circle);
 		}
 		m_circle->setCircle(xCircleData(mp1, mp2, viewMapToScene(e)));
