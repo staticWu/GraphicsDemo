@@ -77,7 +77,7 @@ public:
 	void setPen(const QPen &pen);
 	xStyle::Style style() const { return m_style; }
 	void setStyle(xStyle::Style style);
-
+	// 是否可见与透明度
 	bool isThisVisible() const { return isVisible() && opacity() > 0; }
 
 public slots:
@@ -111,11 +111,12 @@ private:
 
 inline void xEntity::init()
 {
-	setFlag(ItemIsMovable);
+	// 设置标志，默认为设置为使能
+	setFlag(ItemIsMovable);// 能够移动
 	setFlag(ItemIsSelectable);
 	// 忽略父母的透明度，以实现父母不可见而孩子可见
 	setFlag(ItemIgnoresParentOpacity);
-	setAcceptHoverEvents(true);
+	setAcceptHoverEvents(true);// 接受悬停事件
 }
 
 inline qreal xEntity::viewScaleFactor() const

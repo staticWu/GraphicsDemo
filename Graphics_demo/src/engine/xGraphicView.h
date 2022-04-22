@@ -15,7 +15,7 @@ public:
 	~xGraphicView();
 
 	void setAction(xActionPreviewInterface *action);
-	qreal scaleFactor() const { return transform().m11(); }
+	qreal scaleFactor() const { return transform().m11(); }// 获得缩放倍数
 
 public slots:
 	void finishAction();

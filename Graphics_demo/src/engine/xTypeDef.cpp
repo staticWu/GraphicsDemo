@@ -8,10 +8,10 @@ QPainterPath StrokeShapeFromPath(const QPainterPath &path, qreal width)
 		return path;
 
 	QPainterPathStroker ps;
-	ps.setCapStyle(Qt::FlatCap);
-	ps.setJoinStyle(Qt::BevelJoin);
+	ps.setCapStyle(Qt::FlatCap);// 设置帽风格，不覆盖直线末端
+	ps.setJoinStyle(Qt::BevelJoin);// 设置连接样式，线与线之间的缺口填满
 	ps.setWidth(width);
-	return ps.createStroke(path);
+	return ps.createStroke(path);// 将规则给路径并返回一个新路径
 }
 
 double DistancePoint2Line(const QPointF &p, const QLineF &line)
