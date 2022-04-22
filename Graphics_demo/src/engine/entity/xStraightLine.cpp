@@ -154,7 +154,7 @@ void xStraightLine::moveBy(const QPointF& delta)
 	m_point2 += delta;
 	calStraighLinePoints(); // 重新计算直线端点
 	update();
-	emit posChanged(delta);
+	emit pointChange();// 控制点更改
 }
 
 QList<QPointF> xStraightLine::controlPoints() const
@@ -167,10 +167,12 @@ void xStraightLine::moveCtrlPoint(const QPointF& p, const QPointF& movedPt)
 	if (Distance(p, anchorPoint1()) < DELTA_DIST / viewScaleFactor())
 	{
 		setAnchorPoint1(movedPt);
+		emit pointChange();// 控制点更改
 	}
 	else if (Distance(p, anchorPoint2()) < DELTA_DIST / viewScaleFactor())
 	{
 		setAnchorPoint2(movedPt);
+		emit pointChange();// 控制点更改
 	}
 }
 

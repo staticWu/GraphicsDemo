@@ -46,6 +46,9 @@ public:
 	bool isCtrlPoint(const QPointF& p) const override;
 	bool isFittingEntity(const QPointF& p) override;
 	void calVLine();
+
+public slots:
+	void getChangePoint();
 protected:
 	QLineF m_line;
 	xStraightLine* m_SLine = nullptr; // ÓÃÓÚ¸¨ÖúÏß

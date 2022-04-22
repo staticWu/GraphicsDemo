@@ -111,10 +111,14 @@ void xActionDefault::mouseMoveEvent(QMouseEvent *e)
 
 void xActionDefault::mouseReleaseEvent(QMouseEvent *e)
 {
-	m_willMoveItem = false;
-	m_isGrabCtrlPoint = false;
-	m_isGrabRegionEdge = false;
-	m_item = nullptr;
+	if (e->button() == Qt::LeftButton)
+	{
+		m_willMoveItem = false;
+		m_isGrabCtrlPoint = false;
+		m_isGrabRegionEdge = false;
+		m_item = nullptr;
+	}
+
 }
 
 void xActionDefault::hideAllRegionEntity()

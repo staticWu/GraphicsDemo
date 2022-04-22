@@ -10,6 +10,7 @@ xVerticalLine::xVerticalLine(xGraphicView* view, QGraphicsItem* item)
 	:xEntity(view,item)
 {
 	m_SLine = new xStraightLine(view,this);
+	connect(m_SLine,&xStraightLine::pointChange,this,&xVerticalLine::getChangePoint);
 	m_SLine->hide();
 }
 
@@ -160,12 +161,10 @@ void xVerticalLine::moveCtrlPoint(const QPointF& pt, const QPointF& movedPt)
 {
 	if (Distance(pt, pt1()) < DELTA_DIST / viewScaleFactor())
 	{
-		setPt1(movedPt); //移动控制点需重新计算另一根线
-		calVLine();
+		setPt1(movedPt);
 	}
 	else if (Distance(pt, pt2()) < DELTA_DIST / viewScaleFactor())
 	{
-		calVLine();
 		setPt2(movedPt);
 	}
 }
@@ -221,4 +220,12 @@ void xVerticalLine::calVLine()
 		endPt.setX(m_point.x() - m_view->scene()->width());
 	}
 	setLine(startPt, endPt);
+}
+
+void xVerticalLine::getChangePoint()
+{
+	if (m_SLine->isVisible())
+	{
+		calVLine(); // 辅助线有变化，需重新计算垂线
+	}
 }

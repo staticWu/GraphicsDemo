@@ -46,6 +46,9 @@ public:
 	bool isCtrlPoint(const QPointF& p) const override;
 	bool isFittingEntity(const QPointF& p) override;
 	void calStraighLinePoints();
+
+signals:
+	void pointChange();
 protected:
 	QPointF m_point1;// 定位点1
 	QPointF m_point2;// 定位点2
