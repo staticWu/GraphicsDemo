@@ -29,7 +29,7 @@ int xLine::type() const
 
 void xLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-	Q_UNUSED(widget);
+	Q_UNUSED(widget); // 不使用这个参数
 
 	auto style = m_style;
 
@@ -50,8 +50,8 @@ void xLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 				style = xStyle::Hovered;
 		}
 
-		const qreal f = viewScaleFactor();
-		xStyle::makeStyle(style, &m_pen, nullptr, f);
+		const qreal f = viewScaleFactor();// 获取缩放倍数
+		xStyle::makeStyle(style, &m_pen, nullptr, f);// 根据类型，设置对应的画笔和画刷
 	}
 
 	painter->setPen(m_pen);
@@ -61,11 +61,11 @@ void xLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 	if ((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable))
 	{
 		const qreal w = m_pen.widthF();
-		painter->fillRect(QRectF(m_line.x1() - w, m_line.y1() - w, w + w, w + w), Qt::yellow);
+		painter->fillRect(QRectF(m_line.x1() - w, m_line.y1() - w, w + w, w + w), Qt::yellow);// 画两个点
 		painter->fillRect(QRectF(m_line.x2() - w, m_line.y2() - w, w + w, w + w), Qt::yellow);
 	}
 }
-
+// 计算矩形的区域
 QRectF xLine::boundingRect() const
 {
 	if (m_line.isNull())
@@ -78,6 +78,7 @@ QRectF xLine::boundingRect() const
 	const qreal bx = std::max(m_line.x1(), m_line.x2());
 	const qreal sy = std::min(m_line.y1(), m_line.y2());
 	const qreal by = std::max(m_line.y1(), m_line.y2());
+	// 线段的矩形大区域
 	return QRectF(sx - w, sy - w, bx - sx + w + w, by - sy + w + w);
 }
 
@@ -87,9 +88,9 @@ QPainterPath xLine::shape() const
 	if (m_line.isNull())
 		return path;
 
-	path.moveTo(m_line.p1());
-	path.lineTo(m_line.p2());
-	return StrokeShapeFromPath(path, m_pen.widthF() * 2);
+	path.moveTo(m_line.p1());// 添加一条新路径
+	path.lineTo(m_line.p2());// 添加一条线
+	return StrokeShapeFromPath(path, m_pen.widthF() * 2);// 得到一条有宽度的线路径
 }
 
 void xLine::setLine(const QPointF &p1, const QPointF &p2)
@@ -161,7 +162,7 @@ bool xLine::isCtrlPoint(const QPointF &p) const
 	return (Distance(pt1(), p) < DELTA_DIST_2 / viewScaleFactor()
 		|| Distance(pt2(), p) < DELTA_DIST_2 / viewScaleFactor());
 }
-
+// 是否在实体上
 bool xLine::isFittingEntity(const QPointF& p)
 {
 	if (fabs(DistancePoint2Line(p, m_line)) < DELTA_DIST_2 / viewScaleFactor())

@@ -12,7 +12,7 @@ void xEntity::setPen(const QPen &pen)
 {
 	if (pen == m_pen)
 		return;
-
+	// 改变大小之前发送准备信号
 	prepareGeometryChange();
 	m_pen = pen;
 	m_style = xStyle::NoStyle;	// 设置无样式以使用手动设置的笔画
@@ -23,14 +23,14 @@ void xEntity::setStyle(xStyle::Style style)
 {
 	if (style == m_style)
 		return;
-
+	// 改变大小之前发送准备信号
 	prepareGeometryChange();
 	m_style = style;
 	update();
 }
 
 void xEntity::setThisVisible(bool visible)
-{
+{// 根据是否可见设置不透明度
 	if (visible)
 		setOpacity(1.0);
 	else

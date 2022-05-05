@@ -20,7 +20,7 @@ void xActionDefault::mousePressEvent(QMouseEvent *e)
 		auto gi = m_view->itemAt(e->pos());
 		if (gi == nullptr || gi->type() <= xEntity::ET_Unknown)
 		{		
-			hideAllRegionEntity(); 
+			hideAllRegionEntity(); // 隐藏所有的项目
 			return;
 		}
 		auto item = static_cast<xEntity *>(gi);
@@ -121,7 +121,7 @@ void xActionDefault::mouseReleaseEvent(QMouseEvent *e)
 
 }
 
-void xActionDefault::hideAllRegionEntity()
+void xActionDefault::hideAllRegionEntity()// 隐藏所有实体
 {
 	QList<QGraphicsItem*> list = m_scene->items();
 	foreach(QGraphicsItem * item, list)

@@ -59,7 +59,7 @@ void xDrawConcentricCircle::mousePressEvent(QMouseEvent* e)
 			if (Distance(m_circle->center(), spos) > DELTA_DIST_2 )
 			{
 				m_circle->setPt4(viewMapToScene(e));
-				m_circle->setStyle(xStyle::RegDrawn);
+				m_circle->setStyle(xStyle::Drawn);
 
 				// 操作完成，设置为S_ActionFinished
 				m_status = xDef::S_ActionFinished;
@@ -104,7 +104,7 @@ void xDrawConcentricCircle::mouseMoveEvent(QMouseEvent* e)
 		if (m_circle == nullptr)
 		{
 			m_circle = new xConcentricCircle(m_view);
-			m_circle->setStyle(xStyle::RegDrawing);
+			m_circle->setStyle(xStyle::Drawing);
 			m_scene->addItem(m_circle);
 		}
 		m_circle->setThirdCircle(xCircleData(mp1, mp2, viewMapToScene(e)));

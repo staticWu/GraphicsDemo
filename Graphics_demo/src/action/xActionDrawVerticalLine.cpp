@@ -22,13 +22,13 @@ void xActionDrawVerticalLine::mousePressEvent(QMouseEvent* e)
 	{
 		switch (m_status)
 		{
-		case xDef::S_Default:
+		case xDef::S_Default:// 最开始的点
 			mp = spos;
 			m_status = xDef::S_DrawEntity1_P1;
 			e->accept();
 			break;
 
-		case xDef::S_DrawEntity1_P1:
+		case xDef::S_DrawEntity1_P1:// 第一个点
 			if (Distance(mp, spos) > DELTA_DIST_2)
 			{
 				mp2 = spos;
