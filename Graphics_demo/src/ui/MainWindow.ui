@@ -51,96 +51,99 @@
         <height>0</height>
        </size>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
-          <widget class="QPushButton" name="lineBtn">
-           <property name="text">
-            <string>线</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QPushButton" name="circleBtn">
-           <property name="text">
-            <string>圆</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="arcBtn">
-           <property name="text">
-            <string>弧</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QPushButton" name="straightLineBtn">
-           <property name="text">
-            <string>直线</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QPushButton" name="concentricCircleBtn">
-           <property name="text">
-            <string>同心圆</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QPushButton" name="verticalBtn">
-           <property name="text">
-            <string>垂直</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QPushButton" name="horizontalBtn">
-           <property name="text">
-            <string>平行</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QPushButton" name="regLineBtn">
-           <property name="text">
-            <string>范围线</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QPushButton" name="regPointBtn">
-           <property name="text">
-            <string>范围点</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QPushButton" name="regCircleBtn">
-           <property name="text">
-            <string>范围圆</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QPushButton" name="regArcBtn">
-           <property name="text">
-            <string>范围弧</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QPushButton" name="regStraightLineBtn">
-           <property name="text">
-            <string>范围直线</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QPushButton" name="lineBtn">
+         <property name="text">
+          <string>线</string>
+         </property>
+        </widget>
        </item>
-       <item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="circleBtn">
+         <property name="text">
+          <string>圆</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="arcBtn">
+         <property name="text">
+          <string>弧</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="straightLineBtn">
+         <property name="text">
+          <string>直线</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QPushButton" name="concentricCircleBtn">
+         <property name="text">
+          <string>同心圆</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="verticalBtn">
+         <property name="text">
+          <string>垂直</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="horizontalBtn">
+         <property name="text">
+          <string>平行</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="regLineBtn">
+         <property name="text">
+          <string>范围线</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="regPointBtn">
+         <property name="text">
+          <string>范围点</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QPushButton" name="regCircleBtn">
+         <property name="text">
+          <string>范围圆</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QPushButton" name="regArcBtn">
+         <property name="text">
+          <string>范围弧</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QPushButton" name="regStraightLineBtn">
+         <property name="text">
+          <string>范围直线</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QPushButton" name="lineToLineBtn">
+         <property name="text">
+          <string>线与线</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0" colspan="2">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>

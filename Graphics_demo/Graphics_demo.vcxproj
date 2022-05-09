@@ -69,7 +69,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>.\src;.\inc;.\src\ui;.\src\engine;.\src\action;.\src\engine\entity;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;.\src;.\inc;.\src\ui;.\src\engine;.\src\action;.\src\engine\entity;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WarningLevel>Level3</WarningLevel>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -114,6 +114,7 @@
     <ClCompile Include="src\action\xActionDefault.cpp" />
     <ClCompile Include="src\action\xActionDrawCircle.cpp" />
     <ClCompile Include="src\action\xActionDrawLine.cpp" />
+    <ClCompile Include="src\action\xActionDrawLineToLine.cpp" />
     <ClCompile Include="src\action\xActionDrawRegCircle.cpp" />
     <ClCompile Include="src\action\xActionDrawRegLine.cpp" />
     <ClCompile Include="src\action\xActionDrawRegPoint.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="src\engine\xTypeDef.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ui\MainWindow.cpp" />
+    <ClCompile Include="xText.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\ui\MainWindow.ui" />
@@ -160,12 +162,13 @@
   <ItemGroup>
     <ClInclude Include="src\action\xActionDrawCircle.h" />
     <ClInclude Include="src\action\xActionDrawLine.h" />
+    <ClInclude Include="src\action\xActionDrawLineToLine.h" />
     <ClInclude Include="src\action\xActionDrawRegPoint.h" />
     <ClInclude Include="src\action\xActionDrawRegStraightLine.h" />
     <ClInclude Include="src\action\xActionDrawStraightLine.h" />
-    <ClInclude Include="src\action\xActionDrawVerticalLine.h" />
     <ClInclude Include="src\action\xActionInterface.h" />
     <ClInclude Include="src\action\xDrawConcentricCircle.h" />
+    <QtMoc Include="xText.h" />
     <QtMoc Include="src\engine\entity\xVerticalLine.h" />
     <QtMoc Include="src\engine\entity\xConcentricCircle.h" />
     <QtMoc Include="src\engine\entity\xRegStraightLine.h" />
