@@ -53,6 +53,9 @@ public:
 	void changeEdgeByPoint(const QPointF &p) override;
 	bool isRegionEdge(const QPointF &p) const override;
 
+signals:
+	void sendLineChange(QPointF mid_p);
+
 protected:
 	// 范围线的数据
 	QLineF m_regLine;

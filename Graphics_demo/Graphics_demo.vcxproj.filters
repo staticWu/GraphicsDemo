@@ -208,6 +208,9 @@
     <QtMoc Include="xText.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\action\xActionDrawLineToLine.h">
+      <Filter>action</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\ui\MainWindow.ui">
@@ -246,9 +249,6 @@
       <Filter>action</Filter>
     </ClInclude>
     <ClInclude Include="src\action\xDrawConcentricCircle.h">
-      <Filter>action</Filter>
-    </ClInclude>
-    <ClInclude Include="src\action\xActionDrawLineToLine.h">
       <Filter>action</Filter>
     </ClInclude>
   </ItemGroup>

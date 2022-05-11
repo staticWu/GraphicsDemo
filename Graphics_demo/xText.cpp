@@ -16,6 +16,11 @@ xText::xText(QPointF line_1, QPointF line_2, xGraphicView* view, QGraphicsItem* 
 	slope = QVector2D(line_2_mid - line_1_mid).normalized();// 中线方向向量
 	angle = QLineF(line_1_mid, line_2_mid).angle();// 返回直线的角度，0~360度之内
 	angle = 360 - angle;
+	if (angle < 180 && angle>90)
+		angle += 180;
+	else if (angle < 270 && angle>180)
+		angle -= 180;
+	//qDebug() << angle;
 	// 与方向向量垂直方向
 	if (slope.x() == 0 && slope.y() == 0)
 		return;
@@ -91,14 +96,15 @@ QRectF xText::boundingRect() const
 	QFontMetricsF my_fm = QFontMetricsF(QFont());
 	float the_width = my_fm.width(m_text);
 	float the_height = my_fm.height();
+	the_width += the_height;
 
 	// 计算图形在视场中的矩形，包括画笔的宽度，否则无法正确显示
 	// Note：画笔宽度设置为2倍以便更容易被选中
 	const qreal w = m_pen.widthF() * 2;
 	const qreal sx = std::min({ m_line_1.x1(), m_line_1.x2(), m_line_2.x1(), m_line_2.x2(),m_line_3.x1(), m_line_3.x2(),mouse_pos.x() - the_width });
 	const qreal bx = std::max({ m_line_1.x1(), m_line_1.x2(),  m_line_2.x1(), m_line_2.x2(),m_line_3.x1(), m_line_3.x2(),mouse_pos.x() + the_width });
-	const qreal sy = std::min({ m_line_1.y1(), m_line_1.y2(), m_line_2.y1(), m_line_2.y2(),m_line_3.y1(), m_line_3.y2(),mouse_pos.y() - the_height });
-	const qreal by = std::max({ m_line_1.y1(), m_line_1.y2(), m_line_2.y1(), m_line_2.y2(),m_line_3.y1(), m_line_3.y2(),mouse_pos.y() + the_height });
+	const qreal sy = std::min({ m_line_1.y1(), m_line_1.y2(), m_line_2.y1(), m_line_2.y2(),m_line_3.y1(), m_line_3.y2(),mouse_pos.y() - the_width });
+	const qreal by = std::max({ m_line_1.y1(), m_line_1.y2(), m_line_2.y1(), m_line_2.y2(),m_line_3.y1(), m_line_3.y2(),mouse_pos.y() + the_width });
 	return QRectF(sx - w, sy - w, bx - sx + w + w, by - sy + w + w);
 }
 
@@ -197,8 +203,8 @@ void xText::updatePosition()
 	m_line_2.setP2(end_2.toPointF());
 	float p_dis_1 = pos_temp.distanceToLine(end_1, v_temp);
 	float p_dis_2 = pos_temp.distanceToLine(end_2, v_temp);
-	float l_dis = end_1.distanceToPoint(end_2);
-	if (p_dis_1 + p_dis_2 <= l_dis)
+	float l_dis = end_1.distanceToPoint(end_2) + m_pen.widthF();
+	if ((p_dis_1 + p_dis_2) <= l_dis)
 	{
 		m_line_3.setP1(end_1.toPointF());
 		m_line_3.setP2(end_2.toPointF());
@@ -216,4 +222,35 @@ void xText::updatePosition()
 			m_line_3.setP2(pos_temp.toPointF());
 		}
 	}
+}
+
+void xText::setMidPoint(QPointF l_1, QPointF l_2)
+{
+	prepareGeometryChange();
+	line_1_mid = l_1;
+	line_2_mid = l_2;
+	slope = QVector2D(line_2_mid - line_1_mid).normalized();// 中线方向向量
+	angle = QLineF(line_1_mid, line_2_mid).angle();// 返回直线的角度，0~360度之内
+	angle = 360 - angle;
+	if (angle < 180 && angle>90)
+		angle += 180;
+	else if (angle < 270 && angle>180)
+		angle -= 180;
+	//qDebug() << angle;
+	// 与方向向量垂直方向
+	if (slope.x() == 0 && slope.y() == 0)
+		return;
+	else if (slope.x() != 0)
+	{
+		ver.setY(1.0);
+		ver.setX(-slope.y() / slope.x());
+	}
+	else if (slope.y() != 0)
+	{
+		ver.setX(1.0);
+		ver.setY(-slope.x() / slope.y());
+	}
+	ver.normalize();
+	updatePosition();
+	update();
 }

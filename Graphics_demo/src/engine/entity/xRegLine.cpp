@@ -155,6 +155,7 @@ void xRegLine::setSubLine(const QPointF &p1, const QPointF &p2)
 	m_subLine->setLine(p1, p2);
 	m_subLine->setStyle(xStyle::Measured);
 	m_subLine->show();
+	emit sendLineChange(middlePoint());
 }
 
 void xRegLine::setLine(const QPointF &p1, const QPointF &p2, qreal width)
@@ -166,6 +167,7 @@ void xRegLine::setLine(const QPointF &p1, const QPointF &p2, qreal width)
 	m_regLine.setPoints(p1, p2);
 	m_width = width;
 	update();
+	emit sendLineChange(middlePoint());
 	emit shapeChanged();
 }
 
@@ -177,6 +179,7 @@ void xRegLine::setPt1(const QPointF &p)
 	prepareGeometryChange();
 	m_regLine.setP1(p);
 	update();
+	emit sendLineChange(middlePoint());
 	emit shapeChanged();
 }
 
@@ -188,6 +191,7 @@ void xRegLine::setPt2(const QPointF &p)
 	prepareGeometryChange();
 	m_regLine.setP2(p);
 	update();
+	emit sendLineChange(middlePoint());
 	emit shapeChanged();
 }
 
@@ -199,6 +203,7 @@ void xRegLine::moveBy(const QPointF &delta)
 	prepareGeometryChange();
 	m_regLine.translate(delta);
 	update();
+	emit sendLineChange(middlePoint());
 	emit posChanged(delta);
 }
 

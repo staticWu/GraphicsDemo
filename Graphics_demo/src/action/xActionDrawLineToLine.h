@@ -1,12 +1,14 @@
 #pragma once
 
 #include "xActionPreviewInterface.h"
+#include <qobject.h>
 
 class xRegLine;
 class xText;
 
-class xActionDrawLineToLine : public xActionPreviewInterface
+class xActionDrawLineToLine :public QObject ,public xActionPreviewInterface
 {
+	Q_OBJECT
 public:
 	xActionDrawLineToLine(xGraphicView* view);
 	~xActionDrawLineToLine();
@@ -16,6 +18,8 @@ public:
 	void mouseReleaseEvent(QMouseEvent* e) override;
 
 	void cancel() override;
+
+	void getLineChanged(QPointF p);
 
 private:
 	QPointF mp;

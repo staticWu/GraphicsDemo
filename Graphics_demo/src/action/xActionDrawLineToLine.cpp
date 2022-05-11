@@ -5,6 +5,7 @@
 #include "engine/xGraphicView.h"
 #include "entity/xRegLine.h"
 #include "xText.h"
+
 	
 xActionDrawLineToLine::xActionDrawLineToLine(xGraphicView* view)
 	: xActionPreviewInterface(view, xDef::AT_DrawLineToLine)
@@ -83,6 +84,7 @@ void xActionDrawLineToLine::mouseMoveEvent(QMouseEvent* e)
 				m_line_1 = new xRegLine(m_view);
 				m_line_1->setRegWidth(30);
 				m_line_1->setStyle(xStyle::RegDrawing);
+				connect(m_line_1, &xRegLine::sendLineChange, this, &xActionDrawLineToLine::getLineChanged);
 				m_scene->addItem(m_line_1);
 			}
 			m_line_1->setLine(mp, viewMapToScene(e), 30);
@@ -97,6 +99,7 @@ void xActionDrawLineToLine::mouseMoveEvent(QMouseEvent* e)
 				m_line_2 = new xRegLine(m_view);
 				m_line_2->setRegWidth(30);
 				m_line_2->setStyle(xStyle::RegDrawing);
+				connect(m_line_2, &xRegLine::sendLineChange, this, &xActionDrawLineToLine::getLineChanged);
 				m_scene->addItem(m_line_2);
 			}
 			m_line_2->setLine(mp, viewMapToScene(e), 30);
@@ -109,6 +112,7 @@ void xActionDrawLineToLine::mouseMoveEvent(QMouseEvent* e)
 			m_text = new xText(m_line_1->middlePoint(), m_line_2->middlePoint(), m_view);
 			m_text->setMyText("dsadsa");
 			m_text->setStyle(xStyle::Drawing);
+			
 			m_scene->addItem(m_text);
 		}
 		m_text->setMousePos(viewMapToScene(e));
@@ -126,14 +130,31 @@ void xActionDrawLineToLine::cancel()
 	if (m_line_1)
 	{
 		m_scene->removeItem(m_line_1);
+		m_line_1->disconnect();
 		delete m_line_1;
 		m_line_1 = nullptr;
 	}
 	if (m_line_2)
 	{
 		m_scene->removeItem(m_line_2);
+		m_line_2->disconnect();
 		delete m_line_2;
 		m_line_2 = nullptr;
 	}
+	if (m_text)
+	{
+		m_scene->removeItem(m_text);
+		m_text->disconnect();
+		delete m_text;
+		m_text = nullptr;
+	}
 	m_status = xDef::S_Default;
+}
+
+void xActionDrawLineToLine::getLineChanged(QPointF p)
+{
+	if (m_line_1 != nullptr && m_line_2 != nullptr && m_text != nullptr)
+	{
+		m_text->setMidPoint(m_line_1->middlePoint(), m_line_2->middlePoint());
+	}
 }

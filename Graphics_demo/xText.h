@@ -32,6 +32,8 @@ public:
 	void setMyText(const QString& text);
 	void updatePosition();// 更新位置
 
+	void setMidPoint(QPointF l_1, QPointF l_2);
+
 private:
 	QPointF mouse_pos;// 鼠标位置点
 	QString m_text;// 文字
