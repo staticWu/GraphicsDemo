@@ -140,6 +140,12 @@
     <ClCompile Include="xText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="xLineToLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="xActionDrawLineToLine2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
@@ -210,6 +216,12 @@
     </QtMoc>
     <QtMoc Include="src\action\xActionDrawLineToLine.h">
       <Filter>action</Filter>
+    </QtMoc>
+    <QtMoc Include="xLineToLine.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="xActionDrawLineToLine2.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

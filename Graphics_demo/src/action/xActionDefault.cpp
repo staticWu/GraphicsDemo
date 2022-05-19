@@ -103,6 +103,8 @@ void xActionDefault::mouseMoveEvent(QMouseEvent *e)
 	{
 		auto p = viewMapToScene(e);
 		m_item->moveBy(p - m_p);
+		// 线与线需要用到
+		m_item->moveBy2Point(p, m_p);
 		m_p = p;
 		e->accept();
 		return;
@@ -117,6 +119,8 @@ void xActionDefault::mouseReleaseEvent(QMouseEvent *e)
 		m_isGrabCtrlPoint = false;
 		m_isGrabRegionEdge = false;
 		m_item = nullptr;
+		e->accept();
+
 	}
 
 }

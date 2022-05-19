@@ -61,6 +61,8 @@ public:
 
 	// 移动图元，delta为移动增量
 	virtual void moveBy(const QPointF &delta) = 0;
+	// 移动图元，传入移动的两点位置
+	virtual void moveBy2Point(const QPointF& p_after, const QPointF& p_before) {}
 	// 返回图元的绘画控制点
 	virtual QList<QPointF> controlPoints() const = 0;
 	/**

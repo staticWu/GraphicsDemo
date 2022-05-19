@@ -26,6 +26,7 @@ public slots:
 	void onDrawConcentricCircle();
 	void onDrawVerticalLine();
 	void onDrawLineToLine();// 画线与线
+	void onDrawLineToLine2();// 画线与线
 protected:
 	void paintEvent(QPaintEvent *e) override;
 	bool eventFilter(QObject *obj, QEvent *e) override;
