@@ -146,6 +146,12 @@
     <ClCompile Include="xActionDrawLineToLine2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="xActionDrawCircleToLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="xCircleToLine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
@@ -221,6 +227,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="xActionDrawLineToLine2.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="xActionDrawCircleToLine.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="xCircleToLine.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

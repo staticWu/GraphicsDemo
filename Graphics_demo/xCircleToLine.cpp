@@ -1,4 +1,4 @@
-#include "xLineToLine.h"
+#include "xCircleToLine.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QGraphicsScene>
@@ -7,19 +7,20 @@
 #include <qfont.h>
 #include <QFontMetrics>
 
-xLineToLine::xLineToLine(xGraphicView* view, QGraphicsItem* parent, qreal w)
+xCircleToLine::xCircleToLine(xGraphicView* view, QGraphicsItem* parent, qreal w)
 	: xEntity(view, parent),
-	line_1_width_(w),
+	circle_width_(w),
 	line_2_width_(w)
 {
+
 }
 
-int xLineToLine::type() const
+int xCircleToLine::type() const
 {
 	return Type;
 }
 
-void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+void xCircleToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
 	Q_UNUSED(widget); // 不使用这个参数
 
@@ -46,35 +47,34 @@ void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 		xStyle::makeStyle(style, &m_pen, nullptr, f);// 根据类型，设置对应的画笔和画刷
 	}
 
-	QRectF rect;
-	painter->setPen(m_pen);
 	QPen rect_pen;
 	rect_pen.setStyle(Qt::DotLine);
 	rect_pen.setColor(Qt::blue);
 	rect_pen.setWidthF(m_pen.widthF() / 2.0);
-	if (is_line_1_valid_)
+
+	painter->setPen(m_pen);
+
+	if (is_circle_valid_)
 	{
 		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable)) || this->m_style == xStyle::Drawing)
 		{
 			// 边框路径
 			QPainterPath path;
-			path.moveTo(line_1_.p1() + (line_1_ver_ * line_1_width_).toPointF());
-			path.lineTo(line_1_.p2() + (line_1_ver_ * line_1_width_).toPointF());
-			path.lineTo(line_1_.p2() - (line_1_ver_ * line_1_width_).toPointF());
-			path.lineTo(line_1_.p1() - (line_1_ver_ * line_1_width_).toPointF());
+			path.addEllipse(circle_cen_, circle_rx_ + circle_width_, circle_ry_ + circle_width_);
+			path.addEllipse(circle_cen_, circle_rx_ - circle_width_, circle_ry_ - circle_width_);
 			path.closeSubpath();
 			painter->fillPath(path, QColor(112, 0, 0));
 			painter->setPen(rect_pen);
 			painter->drawPath(path);
 			painter->setPen(m_pen);
-			painter->drawLine(line_1_);
+			painter->drawEllipse(circle_cen_, circle_rx_, circle_ry_);
 		}
-		painter->drawLine(entity_line_1_);
-		
+		painter->drawEllipse(entity_circle_cen_, entity_circle_rx_, entity_circle_ry_);
 	}
+		
 	if (is_line_2_valid_)
 	{
-		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable))||this->m_style==xStyle::Drawing)
+		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable)) || this->m_style == xStyle::Drawing)
 		{
 			QPainterPath path;
 			path.moveTo(line_2_.p1() + (line_2_ver_ * line_2_width_).toPointF());
@@ -89,7 +89,23 @@ void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 			painter->drawLine(line_2_);
 		}
 		painter->drawLine(entity_line_2_);
-	
+
+	}
+	else
+	{
+		const qreal w = m_pen.widthF();
+		if (is_first_cirle_p_1_)
+		{
+			painter->fillRect(QRectF(circle_1_.x() - w, circle_1_.y() - w, w + w, w + w), Qt::yellow);// 画两个点
+		}
+		if (is_first_cirle_p_2_)
+		{
+			painter->fillRect(QRectF(circle_2_.x() - w, circle_2_.y() - w, w + w, w + w), Qt::yellow);// 画两个点
+		}
+		if (is_first_cirle_p_3_)
+		{
+			painter->fillRect(QRectF(circle_3_.x() - w, circle_3_.y() - w, w + w, w + w), Qt::yellow);// 画两个点
+		}
 	}
 	if (is_text_valid_)
 	{
@@ -107,10 +123,11 @@ void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 	{
 		is_move_able = true;
 		const qreal w = m_pen.widthF();
-		if (is_line_1_valid_)
+		if (is_circle_valid_)
 		{
-			painter->fillRect(QRectF(line_1_.x1() - w, line_1_.y1() - w, w + w, w + w), Qt::yellow);// 画两个点
-			painter->fillRect(QRectF(line_1_.x2() - w, line_1_.y2() - w, w + w, w + w), Qt::yellow);// 画两个点
+			painter->fillRect(QRectF(circle_1_.x() - w, circle_1_.y() - w, w + w, w + w), Qt::yellow);// 画两个点
+			painter->fillRect(QRectF(circle_2_.x() - w, circle_2_.y() - w, w + w, w + w), Qt::yellow);// 画两个点
+			painter->fillRect(QRectF(circle_3_.x() - w, circle_3_.y() - w, w + w, w + w), Qt::yellow);// 画两个点
 		}
 		if (is_line_2_valid_)
 		{
@@ -119,7 +136,7 @@ void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 		}
 		if (is_text_valid_)
 		{
-			painter->fillRect(QRectF(mouse_pos_.x() - w,mouse_pos_.y() - w, w + w, w + w), Qt::yellow);
+			painter->fillRect(QRectF(mouse_pos_.x() - w, mouse_pos_.y() - w, w + w, w + w), Qt::yellow);
 		}
 	}
 	else
@@ -128,9 +145,10 @@ void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 	}
 }
 
-QRectF xLineToLine::boundingRect() const
+QRectF xCircleToLine::boundingRect() const
 {
-	if (is_line_1_valid_ == false && is_line_2_valid_ == false && is_text_valid_ == false)
+	if (is_circle_valid_ == false && is_line_2_valid_ == false && is_text_valid_ == false
+		&& is_first_cirle_p_1_ == false && is_first_cirle_p_2_ == false)
 		return QRectF();
 
 	// 计算图形在视场中的矩形，包括画笔的宽度，否则无法正确显示
@@ -142,26 +160,34 @@ QRectF xLineToLine::boundingRect() const
 	std::vector<qreal> point_x;
 	std::vector<qreal> point_y;
 
-	if (is_line_1_valid_)
+	if (is_first_cirle_p_1_)
 	{
-		point_x.push_back(line_1_.x1());
-		point_y.push_back(line_1_.y1());
-		point_x.push_back(line_1_.x2());
-		point_y.push_back(line_1_.y2());
-		point_x.push_back(entity_line_1_.x1());
-		point_y.push_back(entity_line_1_.y1());
-		point_x.push_back(entity_line_1_.x2());
-		point_y.push_back(entity_line_1_.y2());
-		QVector2D line_p1 = QVector2D(line_1_.p1());
-		QVector2D line_p2 = QVector2D(line_1_.p2());
-		point_x.push_back((line_p1 + line_1_ver_ * line_1_width_).x());
-		point_x.push_back((line_p1 - line_1_ver_ * line_1_width_).x());
-		point_x.push_back((line_p2 + line_1_ver_ * line_1_width_).x());
-		point_x.push_back((line_p2 - line_1_ver_ * line_1_width_).x());
-		point_y.push_back((line_p1 + line_1_ver_ * line_1_width_).y());
-		point_y.push_back((line_p1 - line_1_ver_ * line_1_width_).y());
-		point_y.push_back((line_p2 + line_1_ver_ * line_1_width_).y());
-		point_y.push_back((line_p2 - line_1_ver_ * line_1_width_).y());
+		point_x.push_back(circle_1_.x());
+		point_y.push_back(circle_1_.y());
+	}
+	
+	if (is_first_cirle_p_2_)
+	{
+		point_x.push_back(circle_2_.x());
+		point_y.push_back(circle_2_.y());
+	}
+
+	if (is_first_cirle_p_3_)
+	{
+		point_x.push_back(circle_3_.x());
+		point_y.push_back(circle_3_.y());
+	}
+
+	if (is_circle_valid_)
+	{
+		point_x.push_back(circle_cen_.x() + circle_width_ + circle_rx_);
+		point_y.push_back(circle_cen_.y() + circle_width_ + circle_ry_);
+		point_x.push_back(circle_cen_.x() - circle_width_ - circle_rx_);
+		point_y.push_back(circle_cen_.y() - circle_width_ - circle_ry_);
+		point_x.push_back(entity_circle_cen_.x()  + entity_circle_rx_);
+		point_y.push_back(entity_circle_cen_.y()  + entity_circle_ry_);
+		point_x.push_back(entity_circle_cen_.x() - entity_circle_rx_);
+		point_y.push_back(entity_circle_cen_.y() - entity_circle_ry_);
 	}
 	if (is_line_2_valid_)
 	{
@@ -210,33 +236,28 @@ QRectF xLineToLine::boundingRect() const
 	const qreal sy = *(std::min_element(point_y.begin(), point_y.end()));
 	const qreal by = *(std::max_element(point_y.begin(), point_y.end()));
 	// 线段的矩形大区域
+
 	return QRectF(sx - w, sy - w, bx - sx + w + w, by - sy + w + w);
 }
 
-QPainterPath xLineToLine::shape() const
+QPainterPath xCircleToLine::shape() const
 {
 	QPainterPath path;
 
-	if (!is_line_1_valid_ || !is_line_2_valid_ || !is_text_valid_)
+	if (is_circle_valid_==false || is_line_2_valid_==false || is_text_valid_==false)
 		return path;
-	if (is_line_1_valid_)
+	if (is_circle_valid_)
 	{
 		QPainterPath path_2;
-		path_2.moveTo(entity_line_1_.p1());
-		path_2.lineTo(entity_line_1_.p2());
+		path_2.addEllipse(entity_circle_cen_, entity_circle_rx_, entity_circle_ry_);
 		path.connectPath(path_2);
 
 		if (this->is_move_able)
 		{
 			QPainterPath path_1;
-			path_1.moveTo(line_1_.p1());
-			path_1.lineTo(line_1_.p2());
-			QPolygonF rect;
-			rect.append(line_1_.p1() + (line_1_ver_ * line_1_width_).toPointF());
-			rect.append(line_1_.p2() + (line_1_ver_ * line_1_width_).toPointF());
-			rect.append(line_1_.p2() - (line_1_ver_ * line_1_width_).toPointF());
-			rect.append(line_1_.p1() - (line_1_ver_ * line_1_width_).toPointF());
-			path_1.addPolygon(rect);
+			path_1.addEllipse(circle_cen_, circle_rx_, circle_ry_);
+			path_1.addEllipse(circle_cen_, circle_rx_ + circle_width_, circle_ry_ + circle_width_);
+			path_1.addEllipse(circle_cen_, circle_rx_ - circle_width_, circle_ry_ - circle_width_);
 			path.connectPath(path_1);
 		}
 	}
@@ -280,49 +301,46 @@ QPainterPath xLineToLine::shape() const
 	return StrokeShapeFromPath(path, m_pen.widthF() * 2);
 }
 
-void xLineToLine::moveBy(const QPointF& delta)
+void xCircleToLine::moveBy(const QPointF& delta)
 {
-
 }
 
-void xLineToLine::moveBy2Point(const QPointF& p_after, const QPointF& p_before)
+void xCircleToLine::moveBy2Point(const QPointF& p_after, const QPointF& p_before)
 {
-	if (is_line_1_valid_)
+
+	if (is_circle_valid_)
 	{
-		QPolygonF rect;
-		rect.append(line_1_.p1() + (line_1_ver_ * line_1_width_).toPointF());
-		rect.append(line_1_.p2() + (line_1_ver_ * line_1_width_).toPointF());
-		rect.append(line_1_.p2() - (line_1_ver_ * line_1_width_).toPointF());
-		rect.append(line_1_.p1() - (line_1_ver_ * line_1_width_).toPointF());
+
 		QPointF delta = p_after - p_before;
 		if (delta.isNull())
 			return;
-		QLineF rect_line_1 = QLineF(rect[0], rect[1]);
-		QLineF rect_line_2 = QLineF(rect[2], rect[3]);
-		if (fabs(DistancePoint2Line(p_before, line_1_)) < DELTA_DIST_2 / viewScaleFactor())
+
+		if (fabs(DistancePoint2Ellipse(p_before, circle_cen_, circle_rx_, circle_ry_)) < DELTA_DIST_2 / viewScaleFactor())
 		{
 
 			prepareGeometryChange();
-			line_1_.translate(delta);
+			circle_1_ += delta;
+			circle_2_ += delta;
+			circle_3_ += delta;
 			updatePosition();
 			update();
 			emit posChanged(delta);
 
 		}
-		else	if (fabs(DistancePoint2Line(p_before, rect_line_1)) < DELTA_DIST_2 / viewScaleFactor())
+		else	if (fabs(DistancePoint2Ellipse(p_before, circle_cen_, circle_rx_ + circle_width_, circle_ry_ + circle_width_)) < DELTA_DIST_2 / viewScaleFactor())
 		{
 
 			prepareGeometryChange();
-			setFirstLineWidth(fabs(DistancePoint2Line(p_after, line_1_)));
+			setFirstCircleWidth(fabs(DistancePoint2Ellipse(p_after, circle_cen_, circle_rx_, circle_ry_)));
 			update();
 			emit shapeChanged();
 
 		}
-		else if (fabs(DistancePoint2Line(p_before, rect_line_2)) < DELTA_DIST_2 / viewScaleFactor())
+		else	if (fabs(DistancePoint2Ellipse(p_before, circle_cen_, circle_rx_ - circle_width_, circle_ry_ - circle_width_)) < DELTA_DIST_2 / viewScaleFactor())
 		{
 
 			prepareGeometryChange();
-			setFirstLineWidth(fabs(DistancePoint2Line(p_after, line_1_)));
+			setFirstCircleWidth(fabs(DistancePoint2Ellipse(p_after, circle_cen_, circle_rx_, circle_ry_)));
 			update();
 			emit shapeChanged();
 
@@ -379,23 +397,26 @@ void xLineToLine::moveBy2Point(const QPointF& p_after, const QPointF& p_before)
 
 		}
 	}
-
 }
 
-QList<QPointF> xLineToLine::controlPoints() const
+QList<QPointF> xCircleToLine::controlPoints() const
 {
-	return QList{ line_1_.p1(),line_1_.p2(), line_2_.p1(),line_2_.p2(),mouse_pos_};
+	return QList{ circle_1_, circle_2_, circle_3_, line_2_.p1(), line_2_.p2(), mouse_pos_ };
 }
 
-void xLineToLine::moveCtrlPoint(const QPointF& pt, const QPointF& movedPt)
+void xCircleToLine::moveCtrlPoint(const QPointF& pt, const QPointF& movedPt)
 {
-	if (Distance(pt, line_1_.p1()) < DELTA_DIST / viewScaleFactor())
+	if (Distance(pt, circle_1_) < DELTA_DIST / viewScaleFactor())
 	{
-		setFirstLinePt1(movedPt);
+		setFirstCirclePt1(movedPt);
 	}
-	else if (Distance(pt, line_1_.p2()) < DELTA_DIST / viewScaleFactor())
+	else if (Distance(pt, circle_2_) < DELTA_DIST / viewScaleFactor())
 	{
-		setFirstLinePt2(movedPt);
+		setFirstCirclePt2(movedPt);
+	}
+	else if (Distance(pt, circle_3_) < DELTA_DIST / viewScaleFactor())
+	{
+		setFirstCirclePt3(movedPt);
 	}
 	else if (Distance(pt, line_2_.p1()) < DELTA_DIST / viewScaleFactor())
 	{
@@ -411,45 +432,52 @@ void xLineToLine::moveCtrlPoint(const QPointF& pt, const QPointF& movedPt)
 	}
 }
 
-bool xLineToLine::isCtrlPoint(const QPointF& p) const
+bool xCircleToLine::isCtrlPoint(const QPointF& p) const
 {
 	if (!(flags() & ItemIsMovable))
 		return false;
 
-	return (Distance(line_1_.p1(), p) < DELTA_DIST_2 / viewScaleFactor()
-		|| Distance(line_1_.p2(), p) < DELTA_DIST_2 / viewScaleFactor()
+	return (Distance(circle_1_, p) < DELTA_DIST_2 / viewScaleFactor()
+		|| Distance(circle_2_, p) < DELTA_DIST_2 / viewScaleFactor()
+		|| Distance(circle_3_, p) < DELTA_DIST_2 / viewScaleFactor()
 		|| Distance(line_2_.p1(), p) < DELTA_DIST_2 / viewScaleFactor()
 		|| Distance(line_2_.p2(), p) < DELTA_DIST_2 / viewScaleFactor()
 		|| Distance(mouse_pos_, p) < DELTA_DIST_2 / viewScaleFactor());
-
 }
 
-bool xLineToLine::isFittingEntity(const QPointF& p)
+bool xCircleToLine::isFittingEntity(const QPointF& p)
 {
-	if (fabs(DistancePoint2Line(p, entity_line_1_)) < DELTA_DIST_2 / viewScaleFactor()||
-		fabs(DistancePoint2Line(p,entity_line_2_))<DELTA_DIST_2/viewScaleFactor())
+	if (fabs(DistancePoint2Ellipse(p, entity_circle_cen_, entity_circle_rx_, entity_circle_ry_)) < DELTA_DIST_2 / viewScaleFactor() ||
+		fabs(DistancePoint2Line(p, entity_line_2_)) < DELTA_DIST_2 / viewScaleFactor())
 		return true;
 	return false;
 }
 
-void xLineToLine::setLineWidth(qreal w)
+void xCircleToLine::setTwoWidth(qreal w)
 {
 	qreal w_a = qAbs(w);
 	if (w_a < 5)
 		return;
-	line_1_width_ = w_a;
+	if (is_first_cirle_p_1_ && is_first_cirle_p_2_ && is_first_cirle_p_3_)
+	{
+		if (w_a < circle_rx_ || w_a < circle_ry_)
+		{
+			w_a = qMin(circle_rx_, circle_ry_);
+		}
+	}
+	circle_width_ = w_a;
 	line_2_width_ = w_a;
 }
 
-void xLineToLine::setFirstLineWidth(qreal w)
+void xCircleToLine::setFirstCircleWidth(qreal w)
 {
 	qreal w_a = qAbs(w);
 	if (w_a < 5)
 		return;
-	line_1_width_ = w_a;
+	circle_width_ = w_a;
 }
 
-void xLineToLine::setSecondLineWidth(qreal w)
+void xCircleToLine::setSecondLineWidth(qreal w)
 {
 	qreal w_a = qAbs(w);
 	if (w_a < 5)
@@ -457,102 +485,68 @@ void xLineToLine::setSecondLineWidth(qreal w)
 	line_2_width_ = w_a;
 }
 
-void xLineToLine::setFirstLine(const QLineF& line)
+void xCircleToLine::setFirstCirclePt1AndPt2(const QPointF& p1, const QPointF& p2)
 {
-	setFirstLine(line.p1(), line.p2());
-}
-
-void xLineToLine::setFirstLine(const QPointF& p1, const QPointF& p2)
-{
-	is_line_1_valid_ = true;
-	if (line_1_.p1() == p1 && line_1_.p2() == p2)
+	
+	if (circle_1_== p1 && circle_2_ == p2)
 		return;
-
+	is_first_cirle_p_1_ = true;
+	is_first_cirle_p_2_ = true;
 	prepareGeometryChange();
-	line_1_.setPoints(p1, p2);
+	circle_1_ = p1;
+	circle_2_ = p2;
 	getLineVer();
 	updatePosition();
 	update();
 	emit shapeChanged();
 }
 
-void xLineToLine::setFirstLinePt1(const QPointF& p)
+void xCircleToLine::setFirstCirclePt1(const QPointF& p)
 {
-	if (line_1_.p1() == p || is_line_1_valid_ == false)
+	if (circle_1_ == p || is_first_cirle_p_1_ == false)
 		return;
 
 	prepareGeometryChange();
-	line_1_.setP1(p);
+	circle_1_ = p;
 	getLineVer();
 	updatePosition();
 	update();
 	emit shapeChanged();
 }
 
-void xLineToLine::setFirstLinePt2(const QPointF& p)
+void xCircleToLine::setFirstCirclePt2(const QPointF& p)
 {
-	if (line_1_.p2() == p || is_line_1_valid_ == false)
+	if (circle_2_ == p || is_first_cirle_p_2_ == false)
 		return;
 
 	prepareGeometryChange();
-	line_1_.setP2(p);
+	circle_2_ = p;
 	getLineVer();
 	updatePosition();
 	update();
 	emit shapeChanged();
 }
 
-void xLineToLine::setFirstLineEntity(const QLineF& line)
+void xCircleToLine::setFirstCirclePt3(const QPointF& p)
 {
-	setFirstLineEntity(line.p1(), line.p2());
-}
-
-void xLineToLine::setFirstLineEntity(const QPointF& p1, const QPointF& p2)
-{
-	is_line_1_valid_ = true;
-	if (entity_line_1_.p1() == p1 && entity_line_1_.p2() == p2)
+	if (circle_3_ == p)
 		return;
-
+	is_circle_valid_ = true;
+	is_first_cirle_p_3_ = true;
 	prepareGeometryChange();
-	entity_line_1_.setPoints(p1, p2);
+	circle_3_ = p;
 	getLineVer();
 	updatePosition();
 	update();
 	emit shapeChanged();
 }
 
-void xLineToLine::setFirstLineEntityPt1(const QPointF& p)
-{
-	if (entity_line_1_.p1() == p || is_line_1_valid_ == false)
-		return;
-
-	prepareGeometryChange();
-	entity_line_1_.setP1(p);
-	getLineVer();
-	updatePosition();
-	update();
-	emit shapeChanged();
-}
-
-void xLineToLine::setFirstLineEntityPt2(const QPointF& p)
-{
-	if (entity_line_1_.p2() == p || is_line_1_valid_ == false)
-		return;
-
-	prepareGeometryChange();
-	entity_line_1_.setP2(p);
-	getLineVer();
-	updatePosition();
-	update();
-	emit shapeChanged();
-}
-
-void xLineToLine::setSecondLine(const QLineF& line)
+void xCircleToLine::setSecondLine(const QLineF& line)
 {
 	setSecondLine(line.p1(), line.p2());
 }
 
-void xLineToLine::setSecondLine(const QPointF& p1, const QPointF& p2)
+void xCircleToLine::setSecondLine(const QPointF& p1, const QPointF& p2)
 {
 	is_line_2_valid_ = true;
 	if (line_2_.p1() == p1 && line_2_.p2() == p2)
@@ -566,7 +560,7 @@ void xLineToLine::setSecondLine(const QPointF& p1, const QPointF& p2)
 	emit shapeChanged();
 }
 
-void xLineToLine::setSecondLinePt1(const QPointF& p)
+void xCircleToLine::setSecondLinePt1(const QPointF& p)
 {
 	if (line_2_.p1() == p || is_line_2_valid_ == false)
 		return;
@@ -579,7 +573,7 @@ void xLineToLine::setSecondLinePt1(const QPointF& p)
 	emit shapeChanged();
 }
 
-void xLineToLine::setSecondLinePt2(const QPointF& p)
+void xCircleToLine::setSecondLinePt2(const QPointF& p)
 {
 	if (line_2_.p2() == p || is_line_2_valid_ == false)
 		return;
@@ -592,12 +586,12 @@ void xLineToLine::setSecondLinePt2(const QPointF& p)
 	emit shapeChanged();
 }
 
-void xLineToLine::setSecondLineEntity(const QLineF& line)
+void xCircleToLine::setSecondLineEntity(const QLineF& line)
 {
 	setSecondLineEntity(line.p1(), line.p2());
 }
 
-void xLineToLine::setSecondLineEntity(const QPointF& p1, const QPointF& p2)
+void xCircleToLine::setSecondLineEntity(const QPointF& p1, const QPointF& p2)
 {
 	is_line_2_valid_ = true;
 	if (entity_line_2_.p1() == p1 && entity_line_2_.p2() == p2)
@@ -611,7 +605,7 @@ void xLineToLine::setSecondLineEntity(const QPointF& p1, const QPointF& p2)
 	emit shapeChanged();
 }
 
-void xLineToLine::setSecondLineEntityPt1(const QPointF& p)
+void xCircleToLine::setSecondLineEntityPt1(const QPointF& p)
 {
 	if (entity_line_2_.p1() == p || is_line_2_valid_ == false)
 		return;
@@ -624,7 +618,7 @@ void xLineToLine::setSecondLineEntityPt1(const QPointF& p)
 	emit shapeChanged();
 }
 
-void xLineToLine::setSecondLineEntityPt2(const QPointF& p)
+void xCircleToLine::setSecondLineEntityPt2(const QPointF& p)
 {
 	if (entity_line_2_.p2() == p || is_line_2_valid_ == false)
 		return;
@@ -637,7 +631,7 @@ void xLineToLine::setSecondLineEntityPt2(const QPointF& p)
 	emit shapeChanged();
 }
 
-void xLineToLine::setMousePos(const QPointF& p)
+void xCircleToLine::setMousePos(const QPointF& p)
 {
 	is_text_valid_ = true;
 	prepareGeometryChange();
@@ -647,25 +641,42 @@ void xLineToLine::setMousePos(const QPointF& p)
 	emit shapeChanged();
 }
 
-void xLineToLine::setMyText(const QString& text)
+void xCircleToLine::setMyText(const QString& text)
 {
 	m_text_ = text;
 }
 
-void xLineToLine::updatePosition()
+double xCircleToLine::DistancePoint2Ellipse(const QPointF& p, const QPointF& e_cen, double rx, double ry)
 {
-	if (is_line_1_valid_ == false || is_line_2_valid_ == false)
-		return;
+	if (rx == 0.0 || ry == 0.0)
+		return 100000.0;
+	double y_x = ry / rx;
+	QVector2D e_tran = QVector2D(e_cen), p_tran = QVector2D(p);
+	e_tran.setX(e_tran.x() * y_x);
+	p_tran.setX(p_tran.x() * y_x);
+	QVector2D dir = (p_tran - e_tran).normalized();
+	QVector2D intersection = e_tran + ry * dir;
+	intersection.setX(intersection.x() / y_x);
+	return intersection.distanceToPoint(QVector2D(p));
+}
 
-	QLineF line_temp_1 = entity_line_1_;
+void xCircleToLine::updatePosition()
+{
+	
+	if (is_circle_valid_)
+		updateEllipse();
+	if (is_circle_valid_ == false || is_line_2_valid_ == false)
+		return;
 	QLineF line_temp_2 = entity_line_2_;
-	if (entity_line_1_.isNull() && entity_line_2_.isNull())
+	if (entity_line_2_.isNull())
 	{
-		line_temp_1 = line_1_;
 		line_temp_2 = line_2_;
 	}
-
-	QVector2D line_1_mid = QVector2D((line_temp_1.p1() + line_temp_1.p2()) / 2.0);
+	QVector2D line_1_mid;
+	if (entity_circle_cen_.isNull())
+		line_1_mid = QVector2D(circle_cen_);
+	else
+		line_1_mid = QVector2D(entity_circle_cen_);
 	QVector2D line_2_mid = QVector2D((line_temp_2.p1() + line_temp_2.p2()) / 2.0);
 
 	slope_ = (line_1_mid - line_2_mid).normalized();// 中线方向向量
@@ -730,25 +741,56 @@ void xLineToLine::updatePosition()
 	}
 }
 
-void xLineToLine::getLineVer()
+void xCircleToLine::updateEllipse()
 {
-	QVector2D slope_1 = QVector2D(line_1_.p2() - line_1_.p1()).normalized();
-	QVector2D slope_2 = QVector2D(line_2_.p2() - line_2_.p1()).normalized();
-
-	if (slope_1.x() == 0 && slope_1.y() == 0)
+	if (is_first_cirle_p_1_==false || is_first_cirle_p_2_==false || is_first_cirle_p_3_==false || y_x_ratio_ == 0.0)
 		return;
-	else if (slope_1.x() != 0)
-	{
-		line_1_ver_.setY(1.0);
-		line_1_ver_.setX(-slope_1.y() / slope_1.x());
-	}
-	else if (slope_1.y() != 0)
-	{
-		line_1_ver_.setX(1.0);
-		line_1_ver_.setY(-slope_1.x() / slope_1.y());
-	}
-	line_1_ver_.normalize();
+	QPointF p1_tran = circle_1_;
+	QPointF p2_tran = circle_2_;
+	QPointF p3_tran = circle_3_;
+	p1_tran.setX(p1_tran.x() / y_x_ratio_);
+	p2_tran.setX(p2_tran.x() / y_x_ratio_);
+	p3_tran.setX(p3_tran.x() / y_x_ratio_);
 
+	if (p1_tran == p2_tran || p2_tran == p3_tran || p3_tran == p1_tran)
+	{
+		return;
+	}
+
+	auto va = p2_tran - p1_tran;
+	auto vb = p3_tran - p1_tran;
+	qreal ra2 = QPointF::dotProduct(va, va) * 0.5;
+	qreal rb2 = QPointF::dotProduct(vb, vb) * 0.5;
+	qreal crossp = va.x() * vb.y() - va.y() * vb.x();
+	// crossp为0则3点在同一直线上
+	QPointF c_tran;
+	qreal r_tran;
+	if (qFuzzyCompare(crossp, 0.0))
+	{
+		c_tran = QPointF();
+		r_tran = 0;
+		
+	}
+	else
+	{
+		crossp = 1.0 / crossp;
+		c_tran.setX((ra2 * vb.y() - rb2 * va.y()) * crossp);
+		c_tran.setY((rb2 * va.x() - ra2 * vb.x()) * crossp);
+		r_tran = QLineF(c_tran, QPointF(0, 0)).length();
+		c_tran += p1_tran;
+	}
+
+	c_tran.setX(c_tran.x() * y_x_ratio_);
+	circle_cen_ = c_tran;
+	circle_ry_ = r_tran;
+	circle_rx_ = r_tran * y_x_ratio_;
+}
+
+void xCircleToLine::getLineVer()
+{
+	if (is_line_2_valid_ == false)
+		return;
+	QVector2D slope_2 = QVector2D(line_2_.p2() - line_2_.p1()).normalized();
 
 	if (slope_2.x() == 0 && slope_2.y() == 0)
 		return;
@@ -764,7 +806,3 @@ void xLineToLine::getLineVer()
 	}
 	line_2_ver_.normalize();
 }
-
-
-
-

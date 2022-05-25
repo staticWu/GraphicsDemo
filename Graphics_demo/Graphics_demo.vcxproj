@@ -145,7 +145,9 @@
     <ClCompile Include="src\engine\xTypeDef.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ui\MainWindow.cpp" />
+    <ClCompile Include="xActionDrawCircleToLine.cpp" />
     <ClCompile Include="xActionDrawLineToLine2.cpp" />
+    <ClCompile Include="xCircleToLine.cpp" />
     <ClCompile Include="xLineToLine.cpp" />
     <ClCompile Include="xText.cpp" />
   </ItemGroup>
@@ -164,6 +166,8 @@
   <ItemGroup>
     <ClInclude Include="src\action\xActionDrawCircle.h" />
     <ClInclude Include="src\action\xActionDrawLine.h" />
+    <QtMoc Include="xActionDrawCircleToLine.h" />
+    <QtMoc Include="xCircleToLine.h" />
     <QtMoc Include="xActionDrawLineToLine2.h" />
     <QtMoc Include="xLineToLine.h" />
     <QtMoc Include="src\action\xActionDrawLineToLine.h" />

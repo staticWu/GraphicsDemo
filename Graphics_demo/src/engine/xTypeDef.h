@@ -46,7 +46,8 @@ public:
 		AT_DrawRegStraightLine,
 		AT_DrawConcentricCircle,
 		AT_DrawVerticalLine,
-		AT_DrawLineToLine
+		AT_DrawLineToLine,
+		AT_DrawCircleToLine
 	};
 	Q_ENUM(ActionType)
 
