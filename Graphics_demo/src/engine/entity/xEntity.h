@@ -3,7 +3,6 @@
 #include <QList>
 #include <QGraphicsObject>
 #include "xTypeDef.h"
-#include "xStyle.h"
 #include "xGraphicView.h"
 
 /**
@@ -52,7 +51,8 @@ public:
 		ET_InterCircleAndArc,
 		ET_InterCircleAndPoint,
 		ET_InterPointAndPoint,
-		ET_InterCouple_End
+		ET_InterCouple_End,
+		ET_RegCircleDiameter,
 	};
 
 	Q_DISABLE_COPY(xEntity)
@@ -78,8 +78,8 @@ public:
 
 	QPen pen() const { return m_pen; }
 	void setPen(const QPen &pen);
-	xStyle::Style style() const { return m_style; }
-	void setStyle(xStyle::Style style);
+	xDef::Style style() const { return m_style; }
+	void setStyle(xDef::Style style);
 	// 是否可见与透明度
 	bool isThisVisible() const { return isVisible() && opacity() > 0; }
 
@@ -105,7 +105,7 @@ protected:
 	inline qreal viewScaleFactor() const;
 
 	QPen m_pen;
-	xStyle::Style m_style = xStyle::NoStyle;
+	xDef::Style m_style = xDef::S_NoStyle;
 	xGraphicView *m_view = nullptr;
 
 private:

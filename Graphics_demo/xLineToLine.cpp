@@ -25,25 +25,25 @@ void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 
 	auto style = m_style;
 
-	if (style != xStyle::NoStyle)
+	if (style != xDef::S_NoStyle)
 	{
 		// 选中状态
 		if (option->state & QStyle::State_Selected)
 		{
-			style = xStyle::Selected;
+			style = xDef::S_Selected;
 		}
 
 		// 悬停状态
 		if (option->state & QStyle::State_MouseOver)
 		{
-			if (style == xStyle::Selected)
-				style = xStyle::HoverSelected;
+			if (style == xDef::S_Selected)
+				style = xDef::S_HoverSelected;
 			else
-				style = xStyle::Hovered;
+				style = xDef::S_Hovered;
 		}
 
 		const qreal f = viewScaleFactor();// 获取缩放倍数
-		xStyle::makeStyle(style, &m_pen, nullptr, f);// 根据类型，设置对应的画笔和画刷
+		MakeStyle(style, &m_pen, nullptr, f);// 根据类型，设置对应的画笔和画刷
 	}
 
 	QRectF rect;
@@ -54,7 +54,7 @@ void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 	rect_pen.setWidthF(m_pen.widthF() / 2.0);
 	if (is_line_1_valid_)
 	{
-		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable)) || this->m_style == xStyle::Drawing)
+		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable)) || this->m_style == xDef::S_Drawing)
 		{
 			// 边框路径
 			QPainterPath path;
@@ -70,11 +70,11 @@ void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 			painter->drawLine(line_1_);
 		}
 		painter->drawLine(entity_line_1_);
-		
+
 	}
 	if (is_line_2_valid_)
 	{
-		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable))||this->m_style==xStyle::Drawing)
+		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable)) || this->m_style == xDef::S_Drawing)
 		{
 			QPainterPath path;
 			path.moveTo(line_2_.p1() + (line_2_ver_ * line_2_width_).toPointF());
@@ -89,7 +89,7 @@ void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 			painter->drawLine(line_2_);
 		}
 		painter->drawLine(entity_line_2_);
-	
+
 	}
 	if (is_text_valid_)
 	{
@@ -119,7 +119,7 @@ void xLineToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 		}
 		if (is_text_valid_)
 		{
-			painter->fillRect(QRectF(mouse_pos_.x() - w,mouse_pos_.y() - w, w + w, w + w), Qt::yellow);
+			painter->fillRect(QRectF(mouse_pos_.x() - w, mouse_pos_.y() - w, w + w, w + w), Qt::yellow);
 		}
 	}
 	else
@@ -384,7 +384,7 @@ void xLineToLine::moveBy2Point(const QPointF& p_after, const QPointF& p_before)
 
 QList<QPointF> xLineToLine::controlPoints() const
 {
-	return QList{ line_1_.p1(),line_1_.p2(), line_2_.p1(),line_2_.p2(),mouse_pos_};
+	return QList{ line_1_.p1(),line_1_.p2(), line_2_.p1(),line_2_.p2(),mouse_pos_ };
 }
 
 void xLineToLine::moveCtrlPoint(const QPointF& pt, const QPointF& movedPt)
@@ -426,8 +426,8 @@ bool xLineToLine::isCtrlPoint(const QPointF& p) const
 
 bool xLineToLine::isFittingEntity(const QPointF& p)
 {
-	if (fabs(DistancePoint2Line(p, entity_line_1_)) < DELTA_DIST_2 / viewScaleFactor()||
-		fabs(DistancePoint2Line(p,entity_line_2_))<DELTA_DIST_2/viewScaleFactor())
+	if (fabs(DistancePoint2Line(p, entity_line_1_)) < DELTA_DIST_2 / viewScaleFactor() ||
+		fabs(DistancePoint2Line(p, entity_line_2_)) < DELTA_DIST_2 / viewScaleFactor())
 		return true;
 	return false;
 }

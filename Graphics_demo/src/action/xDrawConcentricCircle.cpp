@@ -7,7 +7,7 @@
 #include "xPoint.h"
 
 xDrawConcentricCircle::xDrawConcentricCircle(xGraphicView* view)
-	:xActionPreviewInterface(view,xDef::AT_DrawConcentricCircle)
+	:xActionPreviewInterface(view, xDef::AT_DrawConcentricCircle)
 {
 }
 
@@ -24,45 +24,45 @@ void xDrawConcentricCircle::mousePressEvent(QMouseEvent* e)
 	{
 		switch (m_status)
 		{
-		case xDef::S_Default:
+		case xDef::AS_Default:
 			if (m_point1 == nullptr)
 			{
 				m_point1 = new xPoint(m_view);
-				m_point1->setStyle(xStyle::Drawn);
+				m_point1->setStyle(xDef::S_Drawn);
 				m_scene->addItem(m_point1);
 			}
 			mp1 = spos;
-			m_status = xDef::S_DrawEntity1_P1;
+			m_status = xDef::AS_DrawEntity1_P1;
 			m_point1->setPt(mp1);
 			e->accept();
 			break;
 
-		case xDef::S_DrawEntity1_P1:
+		case xDef::AS_DrawEntity1_P1:
 			if (Distance(mp1, spos) > DELTA_DIST_2)
 			{
 				mp2 = spos;
 				m_point2->setPt(mp2);
-				m_status = xDef::S_DrawEntity1_P2;
+				m_status = xDef::AS_DrawEntity1_P2;
 				e->accept();
 			}
 			break;
 
-		case xDef::S_DrawEntity1_P2:
+		case xDef::AS_DrawEntity1_P2:
 			if (Distance(mp1, spos) > DELTA_DIST_2 && Distance(mp2, spos) > DELTA_DIST_2)
 			{
 				m_circle->setThirdCircle(mp1, mp2, viewMapToScene(e));
-				m_status = xDef::S_DrawEntity1_P3;			
+				m_status = xDef::AS_DrawEntity1_P3;
 				e->accept();
 			}
 			break;
-		case xDef::S_DrawEntity1_P3:
-			if (Distance(m_circle->center(), spos) > DELTA_DIST_2 )
+		case xDef::AS_DrawEntity1_P3:
+			if (Distance(m_circle->center(), spos) > DELTA_DIST_2)
 			{
 				m_circle->setPt4(viewMapToScene(e));
-				m_circle->setStyle(xStyle::Drawn);
+				m_circle->setStyle(xDef::S_Drawn);
 
-				// 操作完成，设置为S_ActionFinished
-				m_status = xDef::S_ActionFinished;
+				// 操作完成，设置为AS_ActionFinished
+				m_status = xDef::AS_ActionFinished;
 			}
 			break;
 		default:
@@ -75,19 +75,19 @@ void xDrawConcentricCircle::mouseMoveEvent(QMouseEvent* e)
 {
 	switch (m_status)
 	{
-	case xDef::S_DrawEntity1_P1:
+	case xDef::AS_DrawEntity1_P1:
 		// 画两个点时显示为画直线
 		if (m_point2 == nullptr)
 		{
 			m_point2 = new xPoint(m_view);
-			m_point2->setStyle(xStyle::Drawn);
+			m_point2->setStyle(xDef::S_Drawn);
 			m_scene->addItem(m_point2);
 		}
 		m_point2->setPt(viewMapToScene(e));
 		e->accept();
 		break;
 
-	case xDef::S_DrawEntity1_P2:
+	case xDef::AS_DrawEntity1_P2:
 		// 画第三个点时删除临时的直线
 		if (m_point1)
 		{
@@ -104,18 +104,18 @@ void xDrawConcentricCircle::mouseMoveEvent(QMouseEvent* e)
 		if (m_circle == nullptr)
 		{
 			m_circle = new xConcentricCircle(m_view);
-			m_circle->setStyle(xStyle::Drawing);
+			m_circle->setStyle(xDef::S_Drawing);
 			m_scene->addItem(m_circle);
 		}
 		m_circle->setThirdCircle(xCircleData(mp1, mp2, viewMapToScene(e)));
 		e->accept();
 		break;
-	case xDef::S_DrawEntity1_P3:
+	case xDef::AS_DrawEntity1_P3:
 	{
 		m_circle->setPt4(viewMapToScene(e));
 		e->accept();
 	}
-		break;
+	break;
 	default:
 		break;
 	}
@@ -145,5 +145,5 @@ void xDrawConcentricCircle::cancel()
 		delete m_circle;
 		m_circle = nullptr;
 	}
-	m_status = xDef::S_Default;
+	m_status = xDef::AS_Default;
 }

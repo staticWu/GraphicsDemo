@@ -48,25 +48,25 @@ void xText::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
 
 	auto style = m_style;
 
-	if (style != xStyle::NoStyle)
+	if (style != xDef::S_NoStyle)
 	{
 		// 选中状态
 		if (option->state & QStyle::State_Selected)
 		{
-			style = xStyle::Selected;
+			style = xDef::S_Selected;
 		}
 
 		// 悬停状态
 		if (option->state & QStyle::State_MouseOver)
 		{
-			if (style == xStyle::Selected)
-				style = xStyle::HoverSelected;
+			if (style == xDef::S_Selected)
+				style = xDef::S_HoverSelected;
 			else
-				style = xStyle::Hovered;
+				style = xDef::S_Hovered;
 		}
 
 		const qreal f = viewScaleFactor();// 获取缩放倍数
-		xStyle::makeStyle(style, &m_pen, nullptr, f);// 根据类型，设置对应的画笔和画刷
+		MakeStyle(style, &m_pen, nullptr, f);// 根据类型，设置对应的画笔和画刷
 	}
 
 	painter->setPen(m_pen);
@@ -75,7 +75,7 @@ void xText::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
 	painter->drawLine(m_line_3);
 	painter->translate(mouse_pos);
 	painter->rotate(angle);
-	painter->drawText(0,-m_pen.widthF(), m_text);
+	painter->drawText(0, -m_pen.widthF(), m_text);
 	painter->resetTransform();
 
 	//// 选中时绘画控制点
@@ -90,7 +90,7 @@ void xText::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWi
 // 所占范围
 QRectF xText::boundingRect() const
 {
-	if (m_line_1.isNull() || mouse_pos.isNull()|| m_line_2.isNull()|| m_line_3.isNull())
+	if (m_line_1.isNull() || mouse_pos.isNull() || m_line_2.isNull() || m_line_3.isNull())
 		return QRectF();
 
 	QFontMetricsF my_fm = QFontMetricsF(QFont());
@@ -125,7 +125,7 @@ QPainterPath xText::shape() const
 	path.connectPath(path_2);
 	path.connectPath(path_3);
 	path.connectPath(path_4);
-	
+
 	return StrokeShapeFromPath(path, m_pen.widthF() * 2);
 }
 

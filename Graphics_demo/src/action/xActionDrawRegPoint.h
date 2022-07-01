@@ -4,7 +4,7 @@
 
 class xRegPoint;
 /*
-* 点的预览层 
+* 点的预览层
 */
 class xActionDrawRegPoint : public xActionPreviewInterface
 {

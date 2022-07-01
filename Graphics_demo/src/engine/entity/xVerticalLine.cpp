@@ -7,10 +7,10 @@
 #include <QDebug>
 
 xVerticalLine::xVerticalLine(xGraphicView* view, QGraphicsItem* item)
-	:xEntity(view,item)
+	:xEntity(view, item)
 {
-	m_SLine = new xStraightLine(view,this);
-	connect(m_SLine,&xStraightLine::pointChange,this,&xVerticalLine::getChangePoint);
+	m_SLine = new xStraightLine(view, this);
+	connect(m_SLine, &xStraightLine::pointChange, this, &xVerticalLine::getChangePoint);
 	m_SLine->hide();
 }
 
@@ -29,25 +29,25 @@ void xVerticalLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 
 	auto style = m_style;
 
-	if (style != xStyle::NoStyle)
+	if (style != xDef::S_NoStyle)
 	{
 		// Ñ¡ÖÐ×´Ì¬
 		if (option->state & QStyle::State_Selected)
 		{
-			style = xStyle::Selected;
+			style = xDef::S_Selected;
 		}
 
 		// ÐüÍ£×´Ì¬
 		if (option->state & QStyle::State_MouseOver)
 		{
-			if (style == xStyle::Selected)
-				style = xStyle::HoverSelected;
+			if (style == xDef::S_Selected)
+				style = xDef::S_HoverSelected;
 			else
-				style = xStyle::Hovered;
+				style = xDef::S_Hovered;
 		}
 
 		const qreal f = viewScaleFactor();
-		xStyle::makeStyle(style, &m_pen, nullptr, f);
+		MakeStyle(style, &m_pen, nullptr, f);
 	}
 
 	painter->setPen(m_pen);
@@ -96,7 +96,7 @@ void xVerticalLine::setStraightLine(const QPointF& p1, const QPointF& p2)
 	prepareGeometryChange();
 	m_SLine->setAnchorPoint1(p1);
 	m_SLine->setAnchorPoint2(p2);
-	m_SLine->setStyle(xStyle::Measured);
+	m_SLine->setStyle(xDef::S_Measured);
 	m_SLine->show();
 	update();
 }
@@ -154,7 +154,7 @@ void xVerticalLine::moveBy(const QPointF& delta)
 
 QList<QPointF> xVerticalLine::controlPoints() const
 {
-	return {m_SLine->controlPoints()};
+	return { m_SLine->controlPoints() };
 }
 
 void xVerticalLine::moveCtrlPoint(const QPointF& pt, const QPointF& movedPt)

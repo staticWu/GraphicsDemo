@@ -6,7 +6,7 @@
 class xRegLine;
 class xText;
 
-class xActionDrawLineToLine :public QObject ,public xActionPreviewInterface
+class xActionDrawLineToLine :public QObject, public xActionPreviewInterface
 {
 	Q_OBJECT
 public:

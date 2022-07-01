@@ -33,12 +33,12 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>qt5</QtInstall>
-    <QtModules>core;gui;widgets;</QtModules>
+    <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
     <QtInstall>qt5</QtInstall>
-    <QtModules>core;gui;widgets;</QtModules>
+    <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -141,14 +141,18 @@
     <ClCompile Include="src\engine\entity\xStraightLine.cpp" />
     <ClCompile Include="src\engine\entity\xVerticalLine.cpp" />
     <ClCompile Include="src\engine\xGraphicView.cpp" />
-    <ClCompile Include="src\engine\xStyle.cpp" />
     <ClCompile Include="src\engine\xTypeDef.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ui\MainWindow.cpp" />
+    <ClCompile Include="xActionDrawCircleDiameter.cpp" />
     <ClCompile Include="xActionDrawCircleToLine.cpp" />
     <ClCompile Include="xActionDrawLineToLine2.cpp" />
+    <ClCompile Include="xActionDrawMyArc.cpp" />
+    <ClCompile Include="xCircleDiameter.cpp" />
     <ClCompile Include="xCircleToLine.cpp" />
     <ClCompile Include="xLineToLine.cpp" />
+    <ClCompile Include="xMyArc.cpp" />
+    <ClCompile Include="xMyRegArc.cpp" />
     <ClCompile Include="xText.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +170,11 @@
   <ItemGroup>
     <ClInclude Include="src\action\xActionDrawCircle.h" />
     <ClInclude Include="src\action\xActionDrawLine.h" />
+    <ClInclude Include="xActionDrawMyArc.h" />
+    <QtMoc Include="xMyRegArc.h" />
+    <QtMoc Include="xMyArc.h" />
+    <QtMoc Include="xActionDrawCircleDiameter.h" />
+    <QtMoc Include="xCircleDiameter.h" />
     <QtMoc Include="xActionDrawCircleToLine.h" />
     <QtMoc Include="xCircleToLine.h" />
     <QtMoc Include="xActionDrawLineToLine2.h" />
@@ -201,7 +210,6 @@
     <ClInclude Include="src\action\xActionDrawRegCircle.h" />
     <ClInclude Include="src\action\xActionPreviewInterface.h" />
     <QtMoc Include="src\engine\entity\xCircle.h" />
-    <QtMoc Include="src\engine\xStyle.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\engine\entity\xEntity.h" />

@@ -22,50 +22,50 @@ void xActionDrawCircleToLine::mousePressEvent(QMouseEvent* e)
 	{
 		switch (m_status)
 		{
-		case xDef::S_Default:// 没有点
+		case xDef::AS_Default:// 没有点
 			mp = spos;
-			m_status = xDef::S_DrawEntity1_P1;
+			m_status = xDef::AS_DrawEntity1_P1;
 			e->accept();
 			break;
 
-		case xDef::S_DrawEntity1_P1:// 点完一个点
+		case xDef::AS_DrawEntity1_P1:// 点完一个点
 			if (Distance(mp, spos) > DELTA_DIST_2)
 			{
 				circle_line->setFirstCirclePt1AndPt2(mp, spos);
-				circle_line->setStyle(xStyle::Drawing);
+				circle_line->setStyle(xDef::S_Drawing);
 
 
-				m_status = xDef::S_DrawEntity1_P2;
+				m_status = xDef::AS_DrawEntity1_P2;
 				e->accept();
 			}
 			break;
-		case xDef::S_DrawEntity1_P2:// 点完两个点
+		case xDef::AS_DrawEntity1_P2:// 点完两个点
 			mp = spos;
 			circle_line->setFirstCirclePt3(mp);
-			circle_line->setStyle(xStyle::Drawing);
-			m_status = xDef::S_DrawEntity1_P3;
+			circle_line->setStyle(xDef::S_Drawing);
+			m_status = xDef::AS_DrawEntity1_P3;
 			e->accept();
 			break;
-		case xDef::S_DrawEntity1_P3:// 点完两个点
+		case xDef::AS_DrawEntity1_P3:// 点完两个点
 			mp = spos;
-			m_status = xDef::S_DrawEntity2_P1;
+			m_status = xDef::AS_DrawEntity2_P1;
 			e->accept();
 			break;
-		case xDef::S_DrawEntity2_P1:// 点完第三个点
+		case xDef::AS_DrawEntity2_P1:// 点完第三个点
 			if (Distance(mp, spos) > DELTA_DIST_2)
 			{
 				circle_line->setSecondLine(mp, spos);
-				circle_line->setStyle(xStyle::Drawing);
+				circle_line->setStyle(xDef::S_Drawing);
 
 
-				m_status = xDef::S_DrawEntity2_P2;
+				m_status = xDef::AS_DrawEntity2_P2;
 				e->accept();
 			}
 			break;
-		case xDef::S_DrawEntity2_P2:// 点完第四个点
+		case xDef::AS_DrawEntity2_P2:// 点完第四个点
 			circle_line->setMousePos(spos);
-			circle_line->setStyle(xStyle::Drawn);
-			m_status = xDef::S_ActionFinished;
+			circle_line->setStyle(xDef::S_Drawn);
+			m_status = xDef::AS_ActionFinished;
 			e->accept();
 			break;
 		default:
@@ -78,14 +78,14 @@ void xActionDrawCircleToLine::mouseMoveEvent(QMouseEvent* e)
 {
 	switch (m_status)
 	{
-	case xDef::S_DrawEntity1_P1:
+	case xDef::AS_DrawEntity1_P1:
 		if (Distance(mp, viewMapToScene(e)) > DELTA_DIST_2)
 		{
 			if (circle_line == nullptr)
 			{
 				circle_line = new xCircleToLine(m_view);
 
-				circle_line->setStyle(xStyle::Drawing);
+				circle_line->setStyle(xDef::S_Drawing);
 				//connect(line_line, &xLineToLine::sendLineChange, this, &xActionDrawLineToLine::getLineChanged);
 				m_scene->addItem(circle_line);
 			}
@@ -93,21 +93,21 @@ void xActionDrawCircleToLine::mouseMoveEvent(QMouseEvent* e)
 			e->accept();
 		}
 		break;
-	case xDef::S_DrawEntity1_P2:
+	case xDef::AS_DrawEntity1_P2:
 		if (Distance(mp, viewMapToScene(e)) > DELTA_DIST_2)
 		{
 			circle_line->setFirstCirclePt3(viewMapToScene(e));
 			e->accept();
 		}
 		break;
-	case xDef::S_DrawEntity2_P1:
+	case xDef::AS_DrawEntity2_P1:
 		if (Distance(mp, viewMapToScene(e)) > DELTA_DIST_2)
 		{
 			circle_line->setSecondLine(mp, viewMapToScene(e));
 			e->accept();
 		}
 		break;
-	case xDef::S_DrawEntity2_P2:
+	case xDef::AS_DrawEntity2_P2:
 
 		circle_line->setMousePos(viewMapToScene(e));
 	default:
@@ -128,5 +128,5 @@ void xActionDrawCircleToLine::cancel()
 		delete circle_line;
 		circle_line = nullptr;
 	}
-	m_status = xDef::S_Default;
+	m_status = xDef::AS_Default;
 }

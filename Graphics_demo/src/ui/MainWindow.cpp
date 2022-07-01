@@ -17,7 +17,8 @@
 #include "xActionDrawLineToLine.h"
 #include "xActionDrawLineToLine2.h"
 #include "xActionDrawCircleToLine.h"
-
+#include "xActionDrawCircleDiameter.h"
+#include "xActionDrawMyArc.h"
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -26,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 	m_scene = new QGraphicsScene(this);
 	m_view = new xGraphicView(m_scene, ui.view_widget);
+	m_scene->setSceneRect(m_view->rect());
 
 	auto hLayout1 = new QHBoxLayout(ui.view_widget);
 	hLayout1->setContentsMargins(0, 0, 0, 0);
@@ -45,6 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui.lineToLineBtn, &QPushButton::clicked, this, &MainWindow::onDrawLineToLine);
 	connect(ui.LineToLine2, &QPushButton::clicked, this, &MainWindow::onDrawLineToLine2);
 	connect(ui.circleToLineBtn, &QPushButton::clicked, this, &MainWindow::onDrawCircleToLine);
+	connect(ui.circleDiameterBtn, &QPushButton::clicked, this, &MainWindow::onDrawCircleDiameter);
+	connect(ui.arcBtn, &QPushButton::clicked, this, &MainWindow::onDrawArc);
 }
 
 MainWindow::~MainWindow()
@@ -123,6 +127,18 @@ void MainWindow::onDrawCircleToLine()
 {
 	xActionDrawCircleToLine* circleToLine = new xActionDrawCircleToLine(m_view);
 	m_view->setAction(circleToLine);
+}
+
+void MainWindow::onDrawCircleDiameter()
+{
+	xActionDrawCircleDiameter* circleToLine = new xActionDrawCircleDiameter(m_view);
+	m_view->setAction(circleToLine);
+}
+
+void MainWindow::onDrawArc()
+{
+	xActionDrawMyArc* arc = new xActionDrawMyArc(m_view);
+	m_view->setAction(arc);
 }
 
 void MainWindow::paintEvent(QPaintEvent *e)

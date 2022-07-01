@@ -2,12 +2,12 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDebug>
 xStraightLine::xStraightLine(xGraphicView* view, QGraphicsItem* parent)
-	:xEntity(view,parent)
+	:xEntity(view, parent)
 {
 }
 
 xStraightLine::xStraightLine(const QPointF& p1, const QPointF& p2, xGraphicView* view, QGraphicsItem* parent)
-	: xEntity(view, parent),m_point1(p1),m_point2(p2)
+	: xEntity(view, parent), m_point1(p1), m_point2(p2)
 {
 }
 
@@ -30,26 +30,26 @@ void xStraightLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 	Q_UNUSED(widget);
 
 	auto style = m_style;
-
-	if (style != xStyle::NoStyle)
+	calStraighLinePoints();
+	if (style != xDef::S_NoStyle)
 	{
 		// 选中状态
 		if (option->state & QStyle::State_Selected)
 		{
-			style = xStyle::Selected;
+			style = xDef::S_Selected;
 		}
 
 		// 悬停状态
 		if (option->state & QStyle::State_MouseOver)
 		{
-			if (style == xStyle::Selected)
-				style = xStyle::HoverSelected;
+			if (style == xDef::S_Selected)
+				style = xDef::S_HoverSelected;
 			else
-				style = xStyle::Hovered;
+				style = xDef::S_Hovered;
 		}
 
 		const qreal f = viewScaleFactor();
-		xStyle::makeStyle(style, &m_pen, nullptr, f);
+		MakeStyle(style, &m_pen, nullptr, f);
 	}
 	m_pen.setStyle(Qt::SolidLine);// 默认选中是虚线
 	painter->setPen(m_pen);
@@ -201,11 +201,11 @@ void xStraightLine::calStraighLinePoints()
 	QPoint pt1, pt2;
 	double disX = anchorPoint2().x() - anchorPoint1().x();
 	if (disX == 0) // 垂直时
-	{		
+	{
 		pt1.setX(anchorPoint1().x());
-		pt1.setY(0);
+		pt1.setY(-m_view->height() / viewScaleFactor());
 		pt2.setX(anchorPoint1().x());
-		pt2.setY(m_view->scene()->height());
+		pt2.setY(m_view->height() / viewScaleFactor());
 		setLine(pt1, pt2);
 		return;
 	}
@@ -213,16 +213,16 @@ void xStraightLine::calStraighLinePoints()
 	double k = (anchorPoint2().y() - anchorPoint1().y()) / disX;
 	if (k == 0)  // 平行时
 	{
-		pt1.setX(0);
+		pt1.setX(-m_view->width() / viewScaleFactor());
 		pt1.setY(anchorPoint1().y());
-		pt2.setX(m_view->scene()->width());
+		pt2.setX(m_view->width() / viewScaleFactor());
 		pt2.setY(anchorPoint1().y());
 		setLine(pt1, pt2);
 	}
 	else // 开始点小于结束点
 	{
-		pt1.setY(0);
-		pt2.setY(m_view->scene()->height());
+		pt1.setY(-m_view->height() / viewScaleFactor());
+		pt2.setY(m_view->height() / viewScaleFactor());
 		double startX = (pt1.y() - anchorPoint1().y()) / k + anchorPoint1().x();
 		double endX = (pt2.y() - anchorPoint1().y()) / k + anchorPoint1().x();
 		pt1.setX(startX);

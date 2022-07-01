@@ -59,9 +59,6 @@
     <ClCompile Include="src\engine\xTypeDef.cpp">
       <Filter>engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\xStyle.cpp">
-      <Filter>engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\action\xActionDrawRegCircle.cpp">
       <Filter>action</Filter>
     </ClCompile>
@@ -152,6 +149,21 @@
     <ClCompile Include="xCircleToLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="xCircleDiameter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="xActionDrawCircleDiameter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="xMyArc.cpp">
+      <Filter>engine\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="xActionDrawMyArc.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
+    <ClCompile Include="xMyRegArc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
@@ -164,9 +176,6 @@
       <Filter>engine</Filter>
     </QtMoc>
     <QtMoc Include="src\engine\xTypeDef.h">
-      <Filter>engine</Filter>
-    </QtMoc>
-    <QtMoc Include="src\engine\xStyle.h">
       <Filter>engine</Filter>
     </QtMoc>
     <QtMoc Include="src\engine\entity\xEntity.h">
@@ -235,6 +244,18 @@
     <QtMoc Include="xCircleToLine.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="xCircleDiameter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="xActionDrawCircleDiameter.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="xMyArc.h">
+      <Filter>engine\entity</Filter>
+    </QtMoc>
+    <QtMoc Include="xMyRegArc.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\ui\MainWindow.ui">
@@ -273,6 +294,9 @@
       <Filter>action</Filter>
     </ClInclude>
     <ClInclude Include="src\action\xDrawConcentricCircle.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="xActionDrawMyArc.h">
       <Filter>action</Filter>
     </ClInclude>
   </ItemGroup>

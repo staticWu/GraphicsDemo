@@ -33,25 +33,25 @@ void xLine::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWi
 
 	auto style = m_style;
 
-	if (style != xStyle::NoStyle)
+	if (style !=xDef::S_NoStyle)
 	{
 		// 选中状态
 		if (option->state & QStyle::State_Selected)
 		{
-			style = xStyle::Selected;
+			style = xDef::S_Selected;
 		}
 
 		// 悬停状态
 		if (option->state & QStyle::State_MouseOver)
 		{
-			if (style == xStyle::Selected)
-				style = xStyle::HoverSelected;
+			if (style == xDef::S_Selected)
+				style = xDef::S_HoverSelected;
 			else
-				style = xStyle::Hovered;
+				style = xDef::S_Hovered;
 		}
 
 		const qreal f = viewScaleFactor();// 获取缩放倍数
-		xStyle::makeStyle(style, &m_pen, nullptr, f);// 根据类型，设置对应的画笔和画刷
+		MakeStyle(style, &m_pen, nullptr, f);// 根据类型，设置对应的画笔和画刷
 	}
 
 	painter->setPen(m_pen);

@@ -7,7 +7,7 @@
 #include <QDebug>
 
 xRegStraightLine::xRegStraightLine(xGraphicView* view, QGraphicsItem* parent)
-	:xRegionEntity(view,parent)
+	:xRegionEntity(view, parent)
 {
 	// ÏÈÒþ²ØÄâºÏÖ±Ïß
 	m_straightLine = new xStraightLine(view, this);
@@ -19,14 +19,14 @@ xRegStraightLine::xRegStraightLine(xGraphicView* view, QGraphicsItem* parent)
 }
 
 xRegStraightLine::xRegStraightLine(const QLineF& line, qreal width, xGraphicView* view, QGraphicsItem* parent)
-	: xRegionEntity(width,view, parent)
+	: xRegionEntity(width, view, parent)
 {
 	m_straightLine = new xStraightLine(view, this);
 	m_straightLine->setFlag(ItemIsMovable, false);
 	m_straightLine->setFlag(ItemStacksBehindParent);
 	m_straightLine->hide();
 	m_regLine = new xRegLine(view, this);
-	m_regLine->setLine(line,width);
+	m_regLine->setLine(line, width);
 }
 
 xRegStraightLine::xRegStraightLine(const QPointF& p1, const QPointF& p2, qreal width, xGraphicView* view, QGraphicsItem* parent)
@@ -71,12 +71,12 @@ void xRegStraightLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
 	auto style = m_style;
 	const qreal f = viewScaleFactor();
 
-	if (style != xStyle::NoStyle)
+	if (style != xDef::S_NoStyle)
 	{
 		// Ñ¡ÖÐ×´Ì¬
 		if (option->state & QStyle::State_Selected)
 		{
-			style = xStyle::RegSelected;
+			style = xDef::S_RegSelected;
 			// Ñ¡ÖÐÊ±»æ»­±ß¿ò
 			painter->setPen(QPen(QColor(255, 255, 0, 255), 1.0 / f));
 			painter->drawPath(path);
@@ -85,10 +85,10 @@ void xRegStraightLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
 		// ÐüÍ£×´Ì¬
 		if (option->state & QStyle::State_MouseOver)
 		{
-			style = xStyle::RegHovered;
+			style = xDef::S_RegHovered;
 		}
 
-		xStyle::makeStyle(style, &m_pen, &m_brush, f);
+		MakeStyle(style, &m_pen, &m_brush, f);
 	}
 
 	// Ìî³ä·¶Î§
@@ -114,7 +114,6 @@ void xRegStraightLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
 		painter->fillRect(QRectF(m_regLine->lineData().x1() - w, m_regLine->lineData().y1() - w, w + w, w + w), Qt::yellow);
 		painter->fillRect(QRectF(m_regLine->lineData().x2() - w, m_regLine->lineData().y2() - w, w + w, w + w), Qt::yellow);
 	}
-
 }
 
 QRectF xRegStraightLine::boundingRect() const
@@ -150,7 +149,7 @@ QPainterPath xRegStraightLine::shape() const
 	return StrokeShapeFromPath(path, (m_width + m_pen.widthF()) * 2);
 }
 
-void xRegStraightLine::setLine(const QPointF& p1, const QPointF& p2,qreal width)
+void xRegStraightLine::setLine(const QPointF& p1, const QPointF& p2, qreal width)
 {
 	if (m_regLine->lineData().p1() == p1 && m_regLine->lineData().p2() == p2 && qFuzzyCompare(width, m_width))
 		return;
@@ -169,17 +168,17 @@ void xRegStraightLine::setSubLine(const QPointF& p1, const QPointF& p2)
 		return;
 
 	m_straightLine->setLine(list[0], list[1]);
-	m_straightLine->setStyle(xStyle::Measured);
+	m_straightLine->setStyle(xDef::S_Measured);
 	m_straightLine->show();
 }
 
 void xRegStraightLine::setSubLine(const QLineF& line)
 {
-	QList<QPointF> list = calStraighLinePoints(line.p1(),line.p2());
+	QList<QPointF> list = calStraighLinePoints(line.p1(), line.p2());
 	if (list.isEmpty() && list.count() < 2)
 		return;
 	m_straightLine->setLine(list[0], list[1]);
-	m_straightLine->setStyle(xStyle::Measured);
+	m_straightLine->setStyle(xDef::S_Measured);
 	m_straightLine->show();
 }
 
@@ -220,7 +219,7 @@ void xRegStraightLine::moveBy(const QPointF& delta)
 
 	prepareGeometryChange();
 	m_regLine->setPt1(m_regLine->pt1() + delta);
-	m_regLine->setPt2(m_regLine->pt2() + delta);	
+	m_regLine->setPt2(m_regLine->pt2() + delta);
 	update();
 }
 
@@ -279,7 +278,7 @@ QList<QPointF> xRegStraightLine::calStraighLinePoints(const QPointF& p1, const Q
 		pt1.setY(0);
 		pt2.setX(p1.x());
 		pt2.setY(m_view->scene()->height());
-		return {pt1,pt2};
+		return { pt1,pt2 };
 	}
 
 	double k = (p2.y() - p1.y()) / disX;

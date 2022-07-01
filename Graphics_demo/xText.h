@@ -9,10 +9,10 @@
 class xText : public xEntity
 {
 	Q_OBJECT
-		
+
 public:
 	Q_DISABLE_COPY(xText)
-	explicit xText(QPointF line_1, QPointF line_2, xGraphicView* view, QGraphicsItem* parent = nullptr);
+		explicit xText(QPointF line_1, QPointF line_2, xGraphicView* view, QGraphicsItem* parent = nullptr);
 	virtual ~xText() = default;
 	// 自定义实体类型枚举
 	enum { Type = ET_Line };

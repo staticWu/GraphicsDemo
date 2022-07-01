@@ -19,7 +19,7 @@ void xActionDrawStraightLine::mousePressEvent(QMouseEvent* e)
 	{
 		switch (m_status)
 		{
-		case xDef::S_Default:
+		case xDef::AS_Default:
 		{
 			// 如果第一个点选中了能拟合的物体就直接将当前实体进行拟合
 			auto gi = m_view->itemAt(e->pos());
@@ -33,37 +33,37 @@ void xActionDrawStraightLine::mousePressEvent(QMouseEvent* e)
 					if (m_line == nullptr)
 					{
 						m_line = new xStraightLine(m_view);
-						m_line->setStyle(xStyle::Drawn);
+						m_line->setStyle(xDef::S_Drawn);
 						m_scene->addItem(m_line);
 					}
 					m_line->setLine(temp->lineData());
 					m_line->setAnchorPoint1(temp->anchorPoint1());
 					m_line->setAnchorPoint2(temp->anchorPoint2());
 
-					// 操作完成，设置为S_ActionFinished
-					m_status = xDef::S_ActionFinished;
+					// 操作完成，设置为AS_ActionFinished
+					m_status = xDef::AS_ActionFinished;
 					e->accept();
 					break;
 				}
 			}
 
 			mp = spos;
-			m_status = xDef::S_DrawEntity1_P1;
+			m_status = xDef::AS_DrawEntity1_P1;
 			e->accept();
 		}
 		break;
 
-		case xDef::S_DrawEntity1_P1:
+		case xDef::AS_DrawEntity1_P1:
 			if (Distance(mp, spos) > DELTA_DIST_2)
 			{
 				mp2 = spos;
 
 				m_line->setAnchorPoint1(mp);
 				m_line->setAnchorPoint2(mp2);
-				m_line->setStyle(xStyle::Drawn);
+				m_line->setStyle(xDef::S_Drawn);
 
-				// 操作完成，设置为S_ActionFinished
-				m_status = xDef::S_ActionFinished;
+				// 操作完成，设置为AS_ActionFinished
+				m_status = xDef::AS_ActionFinished;
 				e->accept();
 			}
 			break;
@@ -78,13 +78,13 @@ void xActionDrawStraightLine::mouseMoveEvent(QMouseEvent* e)
 {
 	switch (m_status)
 	{
-	case xDef::S_DrawEntity1_P1:
+	case xDef::AS_DrawEntity1_P1:
 		if (Distance(mp, viewMapToScene(e)) > DELTA_DIST_2)
 		{
 			if (m_line == nullptr)
 			{
 				m_line = new xStraightLine(m_view);
-				m_line->setStyle(xStyle::Drawing);
+				m_line->setStyle(xDef::S_Drawing);
 				m_scene->addItem(m_line);
 			}
 			// 计算直线的两点位置
@@ -114,6 +114,6 @@ void xActionDrawStraightLine::cancel()
 		delete m_line;
 		m_line = nullptr;
 	}
-	m_status = xDef::S_Default;
+	m_status = xDef::AS_Default;
 }
 

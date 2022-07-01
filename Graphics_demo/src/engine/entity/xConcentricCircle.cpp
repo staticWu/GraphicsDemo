@@ -5,7 +5,7 @@
 #include <QGraphicsView>
 #include <QDebug>
 xConcentricCircle::xConcentricCircle(xGraphicView* view, QGraphicsItem* parent)
-	:xEntity(view,parent)
+	:xEntity(view, parent)
 {
 }
 
@@ -24,23 +24,23 @@ void xConcentricCircle::paint(QPainter* painter, const QStyleOptionGraphicsItem*
 
 	auto style = m_style;
 
-	if (style != xStyle::NoStyle)
+	if (style != xDef::S_NoStyle)
 	{
 		if (option->state & QStyle::State_Selected)
 		{
-			style = xStyle::Selected;
+			style = xDef::S_Selected;
 		}
 
 		if (option->state & QStyle::State_MouseOver)
 		{
-			if (style == xStyle::Selected)
-				style = xStyle::HoverSelected;
+			if (style == xDef::S_Selected)
+				style = xDef::S_HoverSelected;
 			else
-				style = xStyle::Hovered;
+				style = xDef::S_Hovered;
 		}
 
 		const qreal f = viewScaleFactor();
-		xStyle::makeStyle(style, &m_pen, nullptr, f);
+		MakeStyle(style, &m_pen, nullptr, f);
 	}
 
 	painter->setPen(m_pen);
@@ -60,12 +60,12 @@ void xConcentricCircle::paint(QPainter* painter, const QStyleOptionGraphicsItem*
 
 QRectF xConcentricCircle::boundingRect() const
 {
-	if (m_circle.isNull())
+	if (!m_circle.isValid())
 		return QRectF();
 
 	// 计算图形在视场中的矩形，包括画笔的宽度，否则无法正确显示
 	// Note：画笔宽度设置为2倍以便更容易被选中
-	qreal pw, x,y, w;
+	qreal pw, x, y, w;
 	pw = m_pen.widthF() * 2;
 	bool max = m_circle.radius() > m_thirdCircle.radius();
 	if (max)
@@ -80,14 +80,14 @@ QRectF xConcentricCircle::boundingRect() const
 		y = m_thirdCircle.center().y() - m_thirdCircle.radius() - pw;
 		w = m_thirdCircle.radius() + pw;
 	}
-	
+
 	return QRectF(x, y, w + w, w + w);
 }
 
 QPainterPath xConcentricCircle::shape() const
 {
 	QPainterPath path;
-	if (m_circle.isNull() || m_thirdCircle.isNull())
+	if (m_circle.isValid() || m_thirdCircle.isValid())
 		return path;
 
 	path.addEllipse(m_thirdCircle.center(), m_thirdCircle.radius(), m_thirdCircle.radius());
@@ -167,7 +167,7 @@ void xConcentricCircle::setPt2(const QPointF& p)
 	prepareGeometryChange();
 	m_thirdCircle = xCircleData(m_thirdCircle.pt1(), p, m_thirdCircle.pt3());
 	// 圆心改变同心圆也改变
-	m_circle = xCircleData(m_thirdCircle.center(),m_circle.radius());
+	m_circle = xCircleData(m_thirdCircle.center(), m_circle.radius());
 	m_ctrlPoint = calCirclePoint(m_ctrlPoint);
 
 	update();
@@ -208,13 +208,13 @@ void xConcentricCircle::moveBy(const QPointF& delta)
 	prepareGeometryChange();
 	m_circle.translate(delta);
 	m_thirdCircle.translate(delta);
-	m_ctrlPoint = calCirclePoint(m_ctrlPoint + delta); 
+	m_ctrlPoint = calCirclePoint(m_ctrlPoint + delta);
 	update();
 }
 
 QList<QPointF> xConcentricCircle::controlPoints() const
 {
-	return {pt1(),pt2() ,pt3() ,pt4() };
+	return { pt1(),pt2() ,pt3() ,pt4() };
 }
 
 void xConcentricCircle::moveCtrlPoint(const QPointF& pt, const QPointF& movedPt)

@@ -26,25 +26,25 @@ void xCircleToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 
 	auto style = m_style;
 
-	if (style != xStyle::NoStyle)
+	if (style != xDef::S_NoStyle)
 	{
 		// 选中状态
 		if (option->state & QStyle::State_Selected)
 		{
-			style = xStyle::Selected;
+			style = xDef::S_Selected;
 		}
 
 		// 悬停状态
 		if (option->state & QStyle::State_MouseOver)
 		{
-			if (style == xStyle::Selected)
-				style = xStyle::HoverSelected;
+			if (style == xDef::S_Selected)
+				style = xDef::S_HoverSelected;
 			else
-				style = xStyle::Hovered;
+				style = xDef::S_Hovered;
 		}
 
 		const qreal f = viewScaleFactor();// 获取缩放倍数
-		xStyle::makeStyle(style, &m_pen, nullptr, f);// 根据类型，设置对应的画笔和画刷
+		MakeStyle(style, &m_pen, nullptr, f);// 根据类型，设置对应的画笔和画刷
 	}
 
 	QPen rect_pen;
@@ -56,7 +56,7 @@ void xCircleToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 
 	if (is_circle_valid_)
 	{
-		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable)) || this->m_style == xStyle::Drawing)
+		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable)) || this->m_style == xDef::S_Drawing)
 		{
 			// 边框路径
 			QPainterPath path;
@@ -71,10 +71,10 @@ void xCircleToLine::paint(QPainter* painter, const QStyleOptionGraphicsItem* opt
 		}
 		painter->drawEllipse(entity_circle_cen_, entity_circle_rx_, entity_circle_ry_);
 	}
-		
+
 	if (is_line_2_valid_)
 	{
-		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable)) || this->m_style == xStyle::Drawing)
+		if (((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable)) || this->m_style == xDef::S_Drawing)
 		{
 			QPainterPath path;
 			path.moveTo(line_2_.p1() + (line_2_ver_ * line_2_width_).toPointF());
@@ -165,7 +165,7 @@ QRectF xCircleToLine::boundingRect() const
 		point_x.push_back(circle_1_.x());
 		point_y.push_back(circle_1_.y());
 	}
-	
+
 	if (is_first_cirle_p_2_)
 	{
 		point_x.push_back(circle_2_.x());
@@ -184,8 +184,8 @@ QRectF xCircleToLine::boundingRect() const
 		point_y.push_back(circle_cen_.y() + circle_width_ + circle_ry_);
 		point_x.push_back(circle_cen_.x() - circle_width_ - circle_rx_);
 		point_y.push_back(circle_cen_.y() - circle_width_ - circle_ry_);
-		point_x.push_back(entity_circle_cen_.x()  + entity_circle_rx_);
-		point_y.push_back(entity_circle_cen_.y()  + entity_circle_ry_);
+		point_x.push_back(entity_circle_cen_.x() + entity_circle_rx_);
+		point_y.push_back(entity_circle_cen_.y() + entity_circle_ry_);
 		point_x.push_back(entity_circle_cen_.x() - entity_circle_rx_);
 		point_y.push_back(entity_circle_cen_.y() - entity_circle_ry_);
 	}
@@ -244,7 +244,7 @@ QPainterPath xCircleToLine::shape() const
 {
 	QPainterPath path;
 
-	if (is_circle_valid_==false || is_line_2_valid_==false || is_text_valid_==false)
+	if (is_circle_valid_ == false || is_line_2_valid_ == false || is_text_valid_ == false)
 		return path;
 	if (is_circle_valid_)
 	{
@@ -487,8 +487,8 @@ void xCircleToLine::setSecondLineWidth(qreal w)
 
 void xCircleToLine::setFirstCirclePt1AndPt2(const QPointF& p1, const QPointF& p2)
 {
-	
-	if (circle_1_== p1 && circle_2_ == p2)
+
+	if (circle_1_ == p1 && circle_2_ == p2)
 		return;
 	is_first_cirle_p_1_ = true;
 	is_first_cirle_p_2_ = true;
@@ -662,7 +662,7 @@ double xCircleToLine::DistancePoint2Ellipse(const QPointF& p, const QPointF& e_c
 
 void xCircleToLine::updatePosition()
 {
-	
+
 	if (is_circle_valid_)
 		updateEllipse();
 	if (is_circle_valid_ == false || is_line_2_valid_ == false)
@@ -743,7 +743,7 @@ void xCircleToLine::updatePosition()
 
 void xCircleToLine::updateEllipse()
 {
-	if (is_first_cirle_p_1_==false || is_first_cirle_p_2_==false || is_first_cirle_p_3_==false || y_x_ratio_ == 0.0)
+	if (is_first_cirle_p_1_ == false || is_first_cirle_p_2_ == false || is_first_cirle_p_3_ == false || y_x_ratio_ == 0.0)
 		return;
 	QPointF p1_tran = circle_1_;
 	QPointF p2_tran = circle_2_;
@@ -769,7 +769,7 @@ void xCircleToLine::updateEllipse()
 	{
 		c_tran = QPointF();
 		r_tran = 0;
-		
+
 	}
 	else
 	{

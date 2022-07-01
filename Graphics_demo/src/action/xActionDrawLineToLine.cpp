@@ -6,7 +6,7 @@
 #include "entity/xRegLine.h"
 #include "xText.h"
 
-	
+
 xActionDrawLineToLine::xActionDrawLineToLine(xGraphicView* view)
 	: xActionPreviewInterface(view, xDef::AT_DrawLineToLine)
 {
@@ -25,45 +25,45 @@ void xActionDrawLineToLine::mousePressEvent(QMouseEvent* e)
 	{
 		switch (m_status)
 		{
-		case xDef::S_Default:// 没有点
+		case xDef::AS_Default:// 没有点
 			mp = spos;
-			m_status = xDef::S_DrawEntity1_P1;
+			m_status = xDef::AS_DrawEntity1_P1;
 			e->accept();
 			break;
 
-		case xDef::S_DrawEntity1_P1:// 点完一个点
+		case xDef::AS_DrawEntity1_P1:// 点完一个点
 			if (Distance(mp, spos) > DELTA_DIST_2)
 			{
 				m_line_1->setLine(mp, spos, 30);
-				m_line_1->setStyle(xStyle::RegDrawn);
+				m_line_1->setStyle(xDef::S_RegDrawn);
 				// TEST
 				m_line_1->setSubLine(mp, spos);
 
-				m_status = xDef::S_DrawEntity1_P2;
+				m_status = xDef::AS_DrawEntity1_P2;
 				e->accept();
 			}
 			break;
-		case xDef::S_DrawEntity1_P2:// 点完两个点
+		case xDef::AS_DrawEntity1_P2:// 点完两个点
 			mp = spos;
-			m_status = xDef::S_DrawEntity2_P1;
+			m_status = xDef::AS_DrawEntity2_P1;
 			e->accept();
 			break;
-		case xDef::S_DrawEntity2_P1:// 点完第三个点
+		case xDef::AS_DrawEntity2_P1:// 点完第三个点
 			if (Distance(mp, spos) > DELTA_DIST_2)
 			{
 				m_line_2->setLine(mp, spos, 30);
-				m_line_2->setStyle(xStyle::RegDrawn);
+				m_line_2->setStyle(xDef::S_RegDrawn);
 				// TEST
 				m_line_2->setSubLine(mp, spos);
 
-				m_status = xDef::S_DrawEntity2_P2;
+				m_status = xDef::AS_DrawEntity2_P2;
 				e->accept();
 			}
 			break;
-		case xDef::S_DrawEntity2_P2:// 点完第四个点
+		case xDef::AS_DrawEntity2_P2:// 点完第四个点
 			m_text->setMousePos(spos);
-			m_text->setStyle(xStyle::Drawn);
-			m_status = xDef::S_ActionFinished;
+			m_text->setStyle(xDef::S_Drawn);
+			m_status = xDef::AS_ActionFinished;
 			e->accept();
 			break;
 		default:
@@ -76,14 +76,14 @@ void xActionDrawLineToLine::mouseMoveEvent(QMouseEvent* e)
 {
 	switch (m_status)
 	{
-	case xDef::S_DrawEntity1_P1:
+	case xDef::AS_DrawEntity1_P1:
 		if (Distance(mp, viewMapToScene(e)) > DELTA_DIST_2)
 		{
 			if (m_line_1 == nullptr)
 			{
 				m_line_1 = new xRegLine(m_view);
 				m_line_1->setRegWidth(30);
-				m_line_1->setStyle(xStyle::RegDrawing);
+				m_line_1->setStyle(xDef::S_Drawing);
 				connect(m_line_1, &xRegLine::sendLineChange, this, &xActionDrawLineToLine::getLineChanged);
 				m_scene->addItem(m_line_1);
 			}
@@ -91,14 +91,14 @@ void xActionDrawLineToLine::mouseMoveEvent(QMouseEvent* e)
 			e->accept();
 		}
 		break;
-	case xDef::S_DrawEntity2_P1:
+	case xDef::AS_DrawEntity2_P1:
 		if (Distance(mp, viewMapToScene(e)) > DELTA_DIST_2)
 		{
 			if (m_line_2 == nullptr)
 			{
 				m_line_2 = new xRegLine(m_view);
 				m_line_2->setRegWidth(30);
-				m_line_2->setStyle(xStyle::RegDrawing);
+				m_line_2->setStyle(xDef::S_Drawing);
 				connect(m_line_2, &xRegLine::sendLineChange, this, &xActionDrawLineToLine::getLineChanged);
 				m_scene->addItem(m_line_2);
 			}
@@ -106,13 +106,13 @@ void xActionDrawLineToLine::mouseMoveEvent(QMouseEvent* e)
 			e->accept();
 		}
 		break;
-	case xDef::S_DrawEntity2_P2:
+	case xDef::AS_DrawEntity2_P2:
 		if (m_text == nullptr)
 		{
 			m_text = new xText(m_line_1->middlePoint(), m_line_2->middlePoint(), m_view);
 			m_text->setMyText("dsadsa");
-			m_text->setStyle(xStyle::Drawing);
-			
+			m_text->setStyle(xDef::S_Drawing);
+
 			m_scene->addItem(m_text);
 		}
 		m_text->setMousePos(viewMapToScene(e));
@@ -148,7 +148,7 @@ void xActionDrawLineToLine::cancel()
 		delete m_text;
 		m_text = nullptr;
 	}
-	m_status = xDef::S_Default;
+	m_status = xDef::AS_Default;
 }
 
 void xActionDrawLineToLine::getLineChanged(QPointF p)

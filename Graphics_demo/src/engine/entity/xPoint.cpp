@@ -2,15 +2,15 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDebug>
 xPoint::xPoint(xGraphicView* view, QGraphicsItem* parent)
-	:xEntity(view,parent), m_point(0,0)
+	:xEntity(view, parent), m_point(0, 0)
 {
-	setStyle(xStyle::Measured);
+	setStyle(xDef::S_Measured);
 }
 
 xPoint::xPoint(const QPointF& p, xGraphicView* view, QGraphicsItem* parent)
 	: xEntity(view, parent), m_point(p)
 {
-	setStyle(xStyle::Measured);
+	setStyle(xDef::S_Measured);
 	// 叉的两条线计算
 	const qreal f = viewScaleFactor();
 	qreal w = 5.0 / f;
@@ -37,22 +37,22 @@ void xPoint::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 
 	auto style = m_style;
 	const qreal f = viewScaleFactor();
-	if (style != xStyle::NoStyle)
+	if (style != xDef::S_NoStyle)
 	{
 		// 选中状态
 		if (option->state & QStyle::State_Selected)
 		{
-			style = xStyle::Selected;
+			style = xDef::S_Selected;
 		}
 		// 悬停状态
 		if (option->state & QStyle::State_MouseOver)
 		{
-			if (style == xStyle::Selected)
-				style = xStyle::HoverSelected;
+			if (style == xDef::S_Selected)
+				style = xDef::S_HoverSelected;
 			else
-				style = xStyle::Hovered;
+				style = xDef::S_Hovered;
 		}
-		xStyle::makeStyle(style, &m_pen, nullptr, f);
+		MakeStyle(style, &m_pen, nullptr, f);
 	}
 
 	m_pen.setStyle(Qt::SolidLine);// 默认选中是虚线
@@ -119,7 +119,7 @@ void xPoint::moveBy(const QPointF& delta)
 
 QList<QPointF> xPoint::controlPoints() const
 {
-	return {pt()};
+	return { pt() };
 }
 
 

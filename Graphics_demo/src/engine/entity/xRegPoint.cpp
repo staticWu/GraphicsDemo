@@ -6,7 +6,7 @@
 #include <QDebug>
 
 xRegPoint::xRegPoint(xGraphicView* view, QGraphicsItem* parent)
-	:xRegionEntity(view,parent)
+	:xRegionEntity(view, parent)
 {
 	m_subPoint = new xPoint(view, this);
 	m_subPoint->setFlag(ItemIsMovable, false);
@@ -43,12 +43,12 @@ void xRegPoint::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
 	auto style = m_style;
 	const qreal f = viewScaleFactor();
 
-	if (style != xStyle::NoStyle)
+	if (style != xDef::S_NoStyle)
 	{
 		// 选中状态
 		if (option->state & QStyle::State_Selected)
 		{
-			style = xStyle::RegSelected;
+			style = xDef::S_RegSelected;
 			// 选中时绘画边框
 			painter->setPen(QPen(QColor(255, 255, 0, 255), 1.0 / f));
 			painter->drawPath(path);
@@ -57,14 +57,14 @@ void xRegPoint::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
 		// 悬停状态
 		if (option->state & QStyle::State_MouseOver)
 		{
-			style = xStyle::RegHovered;
+			style = xDef::S_RegHovered;
 		}
 
-		xStyle::makeStyle(style, &m_pen, &m_brush, f);
+		MakeStyle(style, &m_pen, &m_brush, f);
 	}
 	// 填充范围
 	painter->fillPath(path, m_brush);
-	
+
 
 	// 选中时绘画控制点
 	if ((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable))
@@ -76,7 +76,7 @@ void xRegPoint::paint(QPainter* painter, const QStyleOptionGraphicsItem* option,
 
 QRectF xRegPoint::boundingRect() const
 {
-	if (m_regPoint.isNull())
+	if (m_regPoint.isValid())
 		return QRectF();
 
 	// 计算图形在视场中的矩形，包括画笔的宽度，否则无法正确显示
@@ -91,7 +91,7 @@ QRectF xRegPoint::boundingRect() const
 QPainterPath xRegPoint::shape() const
 {
 	QPainterPath path;
-	if (m_regPoint.isNull())
+	if (m_regPoint.isValid())
 		return path;
 
 	const qreal r = m_regPoint.radius();
@@ -103,13 +103,13 @@ QPainterPath xRegPoint::shape() const
 void xRegPoint::setSubPoint(const QPointF& p)
 {
 	m_subPoint->setPt(p);
-	m_subPoint->setStyle(xStyle::Measured);
+	m_subPoint->setStyle(xDef::S_Measured);
 	m_subPoint->show();
 }
 
 void xRegPoint::setPoint(const QPointF& p, qreal width)
 {
-	if (m_regPoint.center() == p  && qFuzzyCompare(width, m_width))
+	if (m_regPoint.center() == p && qFuzzyCompare(width, m_width))
 		return;
 
 	prepareGeometryChange();
@@ -120,7 +120,7 @@ void xRegPoint::setPoint(const QPointF& p, qreal width)
 
 void xRegPoint::setPt(const QPointF& p)
 {
-	if (m_regPoint.center() == p )
+	if (m_regPoint.center() == p)
 		return;
 
 	prepareGeometryChange();
@@ -144,14 +144,14 @@ void xRegPoint::moveBy(const QPointF& delta)
 		return;
 
 	prepareGeometryChange();
-	QPointF p =  m_regPoint.center() + delta;
+	QPointF p = m_regPoint.center() + delta;
 	m_regPoint.setCenter(p);
 	update();
 }
 
 QList<QPointF> xRegPoint::controlPoints() const
 {
-	return {pt()};
+	return { pt() };
 }
 
 void xRegPoint::moveCtrlPoint(const QPointF& p, const QPointF& movedPt)

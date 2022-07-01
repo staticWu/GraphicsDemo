@@ -15,11 +15,11 @@ void xEntity::setPen(const QPen &pen)
 	// 改变大小之前发送准备信号
 	prepareGeometryChange();
 	m_pen = pen;
-	m_style = xStyle::NoStyle;	// 设置无样式以使用手动设置的笔画
+	m_style =xDef::S_NoStyle;	// 设置无样式以使用手动设置的笔画
 	update();
 }
 
-void xEntity::setStyle(xStyle::Style style)
+void xEntity::setStyle(xDef::Style style)
 {
 	if (style == m_style)
 		return;

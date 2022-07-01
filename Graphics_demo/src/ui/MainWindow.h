@@ -28,6 +28,8 @@ public slots:
 	void onDrawLineToLine();// 画线与线
 	void onDrawLineToLine2();// 画线与线
 	void onDrawCircleToLine();
+	void onDrawCircleDiameter();
+	void onDrawArc();
 protected:
 	void paintEvent(QPaintEvent *e) override;
 	bool eventFilter(QObject *obj, QEvent *e) override;
