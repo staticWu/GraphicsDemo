@@ -30,6 +30,7 @@ public slots:
 	void onDrawCircleToLine();
 	void onDrawCircleDiameter();
 	void onDrawArc();
+	void onDrawRegArc();
 protected:
 	void paintEvent(QPaintEvent *e) override;
 	bool eventFilter(QObject *obj, QEvent *e) override;

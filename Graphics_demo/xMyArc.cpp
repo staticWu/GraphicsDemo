@@ -62,8 +62,12 @@ void xMyArc::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QW
 	}
 
 	painter->setPen(m_pen);
-	QPolygonF path = drawArcPath(m_arc.center(),m_arc.radius(),m_arc.startAngle(),m_arc.spanAngle() + m_arc.startAngle(),m_arc.spanAngle()<0);
-	painter->drawPolyline(path);
+	if (m_arc.isValid())
+	{
+		QPolygonF path = drawArcPath(m_arc.center(), m_arc.radius(), m_arc.startAngle(), m_arc.spanAngle() + m_arc.startAngle(), m_arc.spanAngle() < 0);
+		painter->drawPolyline(path);
+	}
+
 
 	if ((option->state & QStyle::State_Selected) && (flags() & ItemIsMovable))
 	{
@@ -306,3 +310,5 @@ bool xMyArc::pointIsOnArc(QPointF pt)
 	}
 	return false;
 }
+
+

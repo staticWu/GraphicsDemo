@@ -164,6 +164,12 @@
     <ClCompile Include="xMyRegArc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\engine\entity\xRegArc.cpp">
+      <Filter>engine\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\action\xActionDrawRegArc.cpp">
+      <Filter>action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
@@ -256,6 +262,9 @@
     <QtMoc Include="xMyRegArc.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="src\engine\entity\xRegArc.h">
+      <Filter>engine\entity</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="src\ui\MainWindow.ui">
@@ -297,6 +306,9 @@
       <Filter>action</Filter>
     </ClInclude>
     <ClInclude Include="xActionDrawMyArc.h">
+      <Filter>action</Filter>
+    </ClInclude>
+    <ClInclude Include="src\action\xActionDrawRegArc.h">
       <Filter>action</Filter>
     </ClInclude>
   </ItemGroup>

@@ -100,7 +100,7 @@ void xRegCircle::paint(QPainter *painter, const QStyleOptionGraphicsItem *option
 
 QRectF xRegCircle::boundingRect() const
 {
-	if (m_regCircle.isValid())
+	if (!m_regCircle.isValid())
 		return QRectF();
 
 	// 计算图形在视场中的矩形，包括画笔的宽度，否则无法正确显示
@@ -115,7 +115,7 @@ QRectF xRegCircle::boundingRect() const
 QPainterPath xRegCircle::shape() const
 {
 	QPainterPath path;
-	if (m_regCircle.isValid())
+	if (!m_regCircle.isValid())
 		return path;
 
 	const qreal r = m_regCircle.radius();

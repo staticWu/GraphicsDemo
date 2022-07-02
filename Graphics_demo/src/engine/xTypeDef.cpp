@@ -267,4 +267,14 @@ double AnglePoint2Point(const QPointF& p1, const QPointF& p2)
 		return theta_normalized;
 }
 
+qreal rad2deg(qreal rad)
+{
+	return 180.0 / M_PI * rad;
+}
+
+qreal deg2rad(qreal deg)
+{
+	return  M_PI * deg / 180.0;
+}
+
 

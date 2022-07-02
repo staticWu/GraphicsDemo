@@ -22,7 +22,7 @@ public:
 	QRectF boundingRect() const override;
 	QPainterPath shape() const override;
 
-	xArcData circleData() const { return m_arc; }
+	xArcData arcData() const { return m_arc; }
 	void setArc(const xArcData& arc) { setArc(arc.center(), arc.radius(), arc.startAngle(),arc.spanAngle()); }
 	void setArc(const QPointF& center, qreal radius, qreal startAngle, qreal spanAngle);
 	void setArc(const QPointF& p1, const QPointF& p2, const QPointF& p3);
@@ -39,7 +39,7 @@ public:
 	void setPt2(const QPointF& p);
 	void setPt3(const QPointF& p);
 
-	qreal startAngle() const { return m_arc.startAngle(); }
+	qreal startAngle()const  { return m_arc.startAngle(); }
 	qreal spanAngle() const { return m_arc.spanAngle(); }
 	void setStartAngle(qreal startAngle);
 	void setSpanAngle(qreal spanAngle);
@@ -51,6 +51,7 @@ public:
 	bool isFittingEntity(const QPointF& p) override;
 	QPolygonF drawArcPath( QPointF c, qreal radius, qreal startAngle, qreal endAngle, bool reversed) const;
 	bool pointIsOnArc(QPointF pt);
+	inline bool isValid()noexcept { return m_arc.isValid(); } ;
 protected:
 	xArcData m_arc;
 };

@@ -19,6 +19,7 @@
 #include "xActionDrawCircleToLine.h"
 #include "xActionDrawCircleDiameter.h"
 #include "xActionDrawMyArc.h"
+#include "xActionDrawRegArc.h"
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -49,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(ui.circleToLineBtn, &QPushButton::clicked, this, &MainWindow::onDrawCircleToLine);
 	connect(ui.circleDiameterBtn, &QPushButton::clicked, this, &MainWindow::onDrawCircleDiameter);
 	connect(ui.arcBtn, &QPushButton::clicked, this, &MainWindow::onDrawArc);
+	connect(ui.regArcBtn, &QPushButton::clicked, this, &MainWindow::onDrawRegArc);
 }
 
 MainWindow::~MainWindow()
@@ -139,6 +141,12 @@ void MainWindow::onDrawArc()
 {
 	xActionDrawMyArc* arc = new xActionDrawMyArc(m_view);
 	m_view->setAction(arc);
+}
+
+void MainWindow::onDrawRegArc()
+{
+	xActionDrawRegArc* regArc = new xActionDrawRegArc(m_view);
+	m_view->setAction(regArc);
 }
 
 void MainWindow::paintEvent(QPaintEvent *e)

@@ -4,6 +4,7 @@
 #include <qobjectdefs.h>
 #include <QLine>
 #include <QPainterPath>
+#include <QPolygonF>
 #include <QDebug>
 
 #ifndef M_PI
@@ -159,6 +160,16 @@ double DistancePoint2Line(const QPointF& p, const QLineF& line);
 double AnglePoint2Point(const QPointF& p1, const QPointF& p2);
 
 /**
+ * @brief 弧度转角度
+*/
+qreal rad2deg(qreal rad);
+
+/**
+ * @brief 角度转弧度
+*/
+qreal deg2rad(qreal deg);
+
+/**
  * @brief 由圆心、半径及3个控制点组成的圆
 */
 struct xCircleData
@@ -224,6 +235,7 @@ struct xArcData
 	friend constexpr inline bool operator==(const xArcData& arc1, const xArcData& arc2) noexcept;
 	constexpr xArcData& operator=(const xArcData& o) noexcept = default;
 	constexpr xArcData& operator=(xArcData&& o) noexcept = default;
+
 
 private:
 	// 由3点构造圆心、半径及角度
@@ -480,6 +492,7 @@ inline constexpr bool xArcData::isValid() const noexcept
 {
 	return (r > 0.00001 && fabs(alen) > 0.001);
 }
+
 
 inline constexpr bool operator==(const xArcData& arc1, const xArcData& arc2) noexcept
 {
